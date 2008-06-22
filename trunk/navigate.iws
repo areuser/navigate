@@ -15,7 +15,11 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" name="Default" comment="" />
+    <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java" afterPath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/navigate.iml" afterPath="$PROJECT_DIR$/navigate.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/navigate.iws" afterPath="$PROJECT_DIR$/navigate.iws" />
+    </list>
     <ignored path="navigate.iws" />
     <ignored path=".idea/workspace.xml" />
   </component>
@@ -77,46 +81,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="159" column="21" selection-start="5463" selection-end="5463" vertical-scroll-proportion="0.7049399">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="readme.txt.txt" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/readme.txt.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="1325" selection-end="1325" vertical-scroll-proportion="0.51320755">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GenericTypeUtil.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/GenericTypeUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="947" selection-end="947" vertical-scroll-proportion="0.47044024">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="StrictlyNonBlankStringConverter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.25660378">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ValueConvertor.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.42767295">
+            <state line="28" column="13" selection-start="947" selection-end="947" vertical-scroll-proportion="0.45554203">
               <folding />
             </state>
           </provider>
@@ -125,7 +93,34 @@
       <file leaf-file-name="Navigator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="13" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.021383647">
+            <state line="40" column="13" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.020706456">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ValueUtils.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2.jar!/org/apache/commons/jxpath/util/ValueUtils.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="46" column="0" selection-start="2555" selection-end="2555" vertical-scroll-proportion="0.90255785">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BeanPropertyPointer.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2.jar!/org/apache/commons/jxpath/ri/model/beans/BeanPropertyPointer.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="0" selection-start="2211" selection-end="2211" vertical-scroll-proportion="0.90255785">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NavigatorTest.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="48" column="6" selection-start="1448" selection-end="1675" vertical-scroll-proportion="0.26918393">
               <folding />
             </state>
           </provider>
@@ -134,25 +129,34 @@
       <file leaf-file-name="DefaultValueConvertor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/DefaultValueConvertor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.47044024">
+            <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.4473684">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NavigatorTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
+      <file leaf-file-name="LongConverter.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-beanutils/commons-beanutils/1.8.0-BETA/commons-beanutils-1.8.0-BETA.jar!/org/apache/commons/beanutils/converters/LongConverter.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="137" column="27" selection-start="5478" selection-end="5478" vertical-scroll-proportion="0.6226415">
+            <state line="9" column="24" selection-start="335" selection-end="348" vertical-scroll-proportion="0.16267942">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Resource.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Resource.java">
+      <file leaf-file-name="ValueConvertor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.021383647">
+            <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.40669855">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StrictlyNonBlankStringConverter.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="50" column="41" selection-start="2014" selection-end="2014" vertical-scroll-proportion="0.7619617">
               <folding />
             </state>
           </provider>
@@ -161,7 +165,7 @@
       <file leaf-file-name="Task.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="13" selection-start="731" selection-end="731" vertical-scroll-proportion="0.021383647">
+            <state line="20" column="13" selection-start="731" selection-end="731" vertical-scroll-proportion="0.020334927">
               <folding />
             </state>
           </provider>
@@ -221,7 +225,135 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\projects\projects\navigate" />
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test\java\nl\ucan\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test\java\nl\ucan\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\test\java\nl\ucan\navigate\util" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main\java\nl\ucan\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main\java" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main\java\nl\ucan\navigate" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\projects\navigate\src\main\java\nl\ucan\navigate\convertor" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -247,6 +379,7 @@
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="RunManagerConfig.showSettingsBeforeRunnig" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
@@ -257,14 +390,14 @@
       <pattern value="nl.ucan.navigate.*" />
       <module name="navigate" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="PACKAGE_NAME" value="nl.ucan.navigate" />
       <option name="MAIN_CLASS_NAME" value="nl.ucan.navigate.NavigatorTest" />
-      <option name="METHOD_NAME" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="ADDITIONAL_CLASS_PATH" />
@@ -288,19 +421,6 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <module name="" />
@@ -336,6 +456,19 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="JUnit.NavigatorTest" />
     </list>
@@ -367,7 +500,7 @@
     <option name="UPDATE_RUN_STATUS" value="false" />
     <option name="UPDATE_RECURSIVELY" value="true" />
     <option name="MERGE_DRY_RUN" value="false" />
-    <configuration useDefault="true">C:\Documents and Settings\office\Application Data\Subversion</configuration>
+    <configuration useDefault="true">C:\Documents and Settings\areuser\Application Data\Subversion</configuration>
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -390,7 +523,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="1002" extended-state="0" />
+    <frame x="-4" y="-4" width="1688" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
@@ -398,17 +531,17 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299435" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32655367" order="3" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.08022599" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22690992" order="8" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2259887" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="7" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
-      <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24493106" order="3" />
+      <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25719535" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26439577" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25719535" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="6" />
@@ -417,6 +550,7 @@
       <window_info id="Maven Runner Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5165336" order="8" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="5" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="0" />
+      <window_info id="Maven Importer Output" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3423729" order="8" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="4" />
     </layout>
@@ -480,55 +614,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/docs/readme.txt.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="1325" selection-end="1325" vertical-scroll-proportion="0.51320755">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/GenericTypeUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="947" selection-end="947" vertical-scroll-proportion="0.47044024">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.25660378">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.42767295">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="13" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.021383647">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/DefaultValueConvertor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.47044024">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="137" column="27" selection-start="5478" selection-end="5478" vertical-scroll-proportion="0.6226415">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Resource.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.021383647">
@@ -536,16 +621,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="731" selection-end="731" vertical-scroll-proportion="0.021383647">
+        <state line="48" column="40" selection-start="2036" selection-end="2036" vertical-scroll-proportion="0.03107861">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
+    <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/junit/junit/4.4/junit-4.4.jar!/org/junit/internal/runners/MethodRoadie.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="159" column="21" selection-start="5463" selection-end="5463" vertical-scroll-proportion="0.7049399">
+        <state line="25" column="0" selection-start="1090" selection-end="1090" vertical-scroll-proportion="0.7183099">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/GenericTypeUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="947" selection-end="947" vertical-scroll-proportion="0.45554203">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="13" selection-start="1468" selection-end="1468" vertical-scroll-proportion="0.020706456">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2.jar!/org/apache/commons/jxpath/util/ValueUtils.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="0" selection-start="2555" selection-end="2555" vertical-scroll-proportion="0.90255785">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2.jar!/org/apache/commons/jxpath/ri/model/beans/BeanPropertyPointer.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="2211" selection-end="2211" vertical-scroll-proportion="0.90255785">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/DefaultValueConvertor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.4473684">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-beanutils/commons-beanutils/1.8.0-BETA/commons-beanutils-1.8.0-BETA.jar!/org/apache/commons/beanutils/converters/LongConverter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="24" selection-start="335" selection-end="348" vertical-scroll-proportion="0.16267942">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.40669855">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="41" selection-start="2014" selection-end="2014" vertical-scroll-proportion="0.7619617">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="13" selection-start="731" selection-end="731" vertical-scroll-proportion="0.020334927">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="48" column="6" selection-start="1448" selection-end="1675" vertical-scroll-proportion="0.26918393">
           <folding />
         </state>
       </provider>

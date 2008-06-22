@@ -2,15 +2,19 @@ package nl.ucan.navigate;
 
 import junit.framework.Assert;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.beans.IntrospectionException;
 import java.util.*;
+import java.text.SimpleDateFormat;
 
 import nl.ucan.navigate.util.Task;
-import nl.ucan.navigate.util.Resource;/*
+import nl.ucan.navigate.util.Resource;
+import nl.ucan.navigate.convertor.ValueConvertor;
+import nl.ucan.navigate.convertor.DefaultValueConvertor;/*
  * Copyright 2007-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,7 +42,6 @@ public class NavigatorTest {
     @After
     public void teardown() {
     }
-
     @Test
     public void example() throws IntrospectionException {
         Task simple = new Task();
@@ -98,7 +101,7 @@ public class NavigatorTest {
                 ,{"details[@name='license']","Apache License"}
         });
         Task task = (Task) Navigator.populate(new Task(),init);
-        Assert.assertEquals(task.getName(),"promote xbean"); 
+        Assert.assertEquals(task.getName(),"promote xbean");
         Assert.assertEquals(task.getCompletion(),0.01F);
         Assert.assertEquals(task.getAssigned().getRole(),"founder");
         Assert.assertEquals(task.getSubTask().get(0).getName(),"roadshow");
@@ -109,7 +112,7 @@ public class NavigatorTest {
                 {"subTask[assigned/role='marketing']/assigned/role","founder"}
         });
         task = (Task) Navigator.populate(task,modified);
-        Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder"); 
+        Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder");
     }
 
     @Test
@@ -132,7 +135,7 @@ public class NavigatorTest {
         Map extract = Navigator.extract(task, new HashSet(Arrays.asList(
            "name"
            ,"completion"
-           ,"assigned/role"               
+           ,"assigned/role"
            ,"subTask[1]/name"
            ,"subTask[1]/assigned/role"
            ,"details[@name='license']"
@@ -143,7 +146,7 @@ public class NavigatorTest {
         Assert.assertEquals(extract.get("assigned/role"),"founder");
         Assert.assertEquals(extract.get("subTask[1]/name"),"roadshow");
         Assert.assertEquals(extract.get("subTask[1]/assigned/role"),"marketing");
-        Assert.assertEquals(extract.get("details[@name='license']"),"Apache License");  
+        Assert.assertEquals(extract.get("details[@name='license']"),"Apache License");
     }
 
 
