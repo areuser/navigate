@@ -1,20 +1,17 @@
 package nl.ucan.navigate;
 
-import junit.framework.Assert;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.apache.commons.collections.MapUtils;
 
 import java.beans.IntrospectionException;
 import java.util.*;
-import java.text.SimpleDateFormat;
 
 import nl.ucan.navigate.util.Task;
 import nl.ucan.navigate.util.Resource;
-import nl.ucan.navigate.convertor.ValueConvertor;
-import nl.ucan.navigate.convertor.DefaultValueConvertor;/*
+import nl.ucan.navigate.convertor.EventHandler;
+import junit.framework.Assert;/*
  * Copyright 2007-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -42,6 +39,29 @@ public class NavigatorTest {
     @After
     public void teardown() {
     }
+
+    @Test
+    public void test() throws IntrospectionException {
+        Task simple = new Task();
+        Map<Navigator.Event, EventHandler> handler = new HashMap<Navigator.Event, EventHandler>();
+        handler.put(Navigator.Event.AddedIndexedProperty, new EventHandler(){
+            public void on(Object[] o) {
+                 Task task = (Task)o[0];
+                 String property = (String)o[1]; // subtask
+                 Integer index = (Integer)o[2]; // 0
+                 Task  value = (Task)o[3]; // 
+            }
+        });
+        Navigator.populate(simple,new Object[][]{
+            {"name","deploy project"}
+            ,{"subTask[1]/name","write article"}
+            ,{"subTask[1]/assigned/role","volunteer"}
+            ,{"details[@name='project']","beannav"}
+            ,{"assigned/role","founder"}
+        },handler
+        );
+    }
+
     @Test
     public void example() throws IntrospectionException {
         Task simple = new Task();
@@ -92,14 +112,14 @@ public class NavigatorTest {
 
     @Test
     public void populate() throws IntrospectionException {
-        Map  init = MapUtils.putAll(new HashMap(), new Object[][]{
+        Object[][] init = new Object[][]{
                 {"name","promote xbean"}
                 ,{"completion",0.01F}
                 ,{"assigned/role","founder"}
                 ,{"subTask[1]/name","roadshow"}
                 ,{"subTask[1]/assigned/role","marketing"}
                 ,{"details[@name='license']","Apache License"}
-        });
+        };
         Task task = (Task) Navigator.populate(new Task(),init);
         Assert.assertEquals(task.getName(),"promote xbean");
         Assert.assertEquals(task.getCompletion(),0.01F);
@@ -108,9 +128,9 @@ public class NavigatorTest {
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"marketing");
         Assert.assertEquals(task.getDetails().get("license"),"Apache License");
         //
-        Map  modified = MapUtils.putAll(new HashMap(), new Object[][]{
+        Object[][] modified = new Object[][]{
                 {"subTask[assigned/role='marketing']/assigned/role","founder"}
-        });
+        };
         task = (Task) Navigator.populate(task,modified);
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder");
     }
@@ -132,14 +152,14 @@ public class NavigatorTest {
         subTasks.add(subTask);
         task.getDetails().put("license","Apache License");
 
-        Map extract = Navigator.extract(task, new HashSet(Arrays.asList(
+        Map extract = Navigator.extract(task, new Object[]{
            "name"
            ,"completion"
            ,"assigned/role"
            ,"subTask[1]/name"
            ,"subTask[1]/assigned/role"
            ,"details[@name='license']"
-        )));
+        });
 
         Assert.assertEquals(extract.get("name"),"promote xbean");
         Assert.assertEquals(extract.get("completion"),0.01F);
