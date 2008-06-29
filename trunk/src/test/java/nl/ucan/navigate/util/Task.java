@@ -25,16 +25,7 @@ public class Task {
       private Float  completion;
       private Resource  assigned;
       private Task   parent;
-      private List<Task> subTask = new BidiList<Task>(new ArrayList(),new PreModification<Task>() {
-             public Task add(Task task) {
-                 task.setParent(Task.this);
-                 return task;
-             }
-             public void remove(Task task) {
-                 task.setParent(null);
-             }
-         }
-      );
+      private List<Task> subTask = new ArrayList();
       private Map<String,String>  details = new HashMap<String,String>();
 
     public Task(){}
