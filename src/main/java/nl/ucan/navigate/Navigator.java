@@ -19,6 +19,7 @@ import java.lang.reflect.Constructor;
 
 import nl.ucan.navigate.convertor.DefaultValueConvertor;
 import nl.ucan.navigate.convertor.ValueConvertor;
+import nl.ucan.navigate.convertor.EventHandler;
 
 /*
 * Copyright 2007-2008 the original author or authors.
@@ -39,132 +40,160 @@ import nl.ucan.navigate.convertor.ValueConvertor;
 * since  : 0.1
 */
 public class Navigator {
-        private static Log log = LogFactory.getLog(Navigator.class);
-        public static Object populate(Object bean, Object[][] expPathValues) throws IntrospectionException {
-            return populate(bean,MapUtils.putAll(new HashMap(),expPathValues));
-        }
+    private static Log log = LogFactory.getLog(Navigator.class);
+    // TODO decide : keep EventHandler or use observer-observerable pattern
+    public enum Event {
+        AddedIndexedProperty, AddedProperty
+    };
+    public static Object populate(Object bean, Object[][] xpathEntries) throws IntrospectionException {
+        ValueConvertor valueConvertor =   new DefaultValueConvertor();
+        Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();        
+        return populate(bean,xpathEntries,valueConvertor,handlers);
+    }
+    public static Object populate(Object bean, Object[][] xpathEntries,ValueConvertor valueConvertor) throws IntrospectionException {
+        Map<Event, EventHandler> handlers = new HashMap<Event,EventHandler>();
+        return populate(bean,xpathEntries,valueConvertor,handlers);
+    }
+    public static Object populate(Object bean, Object[][] xpathEntries,Map<Event,EventHandler> handlers) throws IntrospectionException {
+        ValueConvertor valueConvertor =   new DefaultValueConvertor();
+        return populate(bean,xpathEntries,valueConvertor,handlers);
+    }
+    public static Object populate(Object bean,Object[][] xpathEntries, ValueConvertor valueConvertor,Map<Event,EventHandler> handlers) throws IntrospectionException {
+        Map  xpathEntryMap = MapUtils.putAll(new HashMap(),xpathEntries);
+        JXPathContext context = JXPathContext.newContext(bean);
+        context.setFactory(new BeanPropertyFactory(handlers));
+        context.setLenient(true); //suppress JPathException for inexistent paths
 
-        public static Object populate(Object bean, Map expPathValues) throws IntrospectionException {
-            return populate(bean,expPathValues, new DefaultValueConvertor());
+        // 1. Navigator and visit xpath node and create required path of beans and collections if value != null
+        Iterator itExpPathValue = xpathEntryMap.entrySet().iterator();
+        while(itExpPathValue.hasNext()) {
+            Map.Entry entry = (Map.Entry)itExpPathValue.next();
+            String expression = (String)entry.getKey();
+            Object value = entry.getValue();
+            NodePointer np = (NodePointer)context.getPointer(expression);
+            value = valueConvertor.evaluate(expression,value);
+             if (!np.isActual() && value != null ) {
+                 context.createPath(expression);
+             }
         }
-        public static Object populate(Object bean,Map expPathValues, ValueConvertor valueConvertor) throws IntrospectionException {
-            JXPathContext context = JXPathContext.newContext(bean);
-            context.setFactory(new BeanPropertyFactory());
-            context.setLenient(true); //suppress JPathException for inexistent paths
-
-            // 1. Navigator and visit xpath node and create required path of beans and collections if value != null
-            Iterator itExpPathValue = expPathValues.entrySet().iterator();
-            while(itExpPathValue.hasNext()) {
-                Map.Entry entry = (Map.Entry)itExpPathValue.next();
-                String expression = (String)entry.getKey();
-                Object value = entry.getValue();
-                NodePointer np = (NodePointer)context.getPointer(expression);
-                value = valueConvertor.evaluate(expression,value);
-                 if (!np.isActual() && value != null ) {
-                     context.createPath(expression);
-                 }
+        // 2. Set value xpath node; ignore xpath nodes of inexistent paths
+        itExpPathValue = xpathEntryMap.entrySet().iterator();
+        while(itExpPathValue.hasNext()) {
+            Map.Entry entry = (Map.Entry)itExpPathValue.next();
+            String expression = (String)entry.getKey();
+            Object value = entry.getValue();
+            NodePointer np = (NodePointer)context.getPointer(expression);
+            if ( np.isActual()) {
+                Class<?> clasz = getActualTypeArgument(np);
+                value = valueConvertor.evaluate(expression,value,clasz);
+                np.setValue(value);
             }
-            // 2. Set value xpath node; ignore xpath nodes of inexistent paths
-            itExpPathValue = expPathValues.entrySet().iterator();
-            while(itExpPathValue.hasNext()) {
-                Map.Entry entry = (Map.Entry)itExpPathValue.next();
-                String expression = (String)entry.getKey();
-                Object value = entry.getValue();
-                NodePointer np = (NodePointer)context.getPointer(expression);
-                if ( np.isActual()) {
-                    Class<?> clasz = getActualTypeArgument(np);
-                    value = valueConvertor.evaluate(expression,value,clasz);
-                    np.setValue(value);
-                }
-            }
-
-            return bean;
         }
 
-        public static Map extract(Object bean, Object[] expressions) throws IntrospectionException {
-            return extract(bean,new HashSet(Arrays.asList(expressions)));
-        }
+        return bean;
+    };
 
-        public static Map extract(Object bean, Set<String> expressions) {
-            Map extracted = new HashMap();
-            JXPathContext context = JXPathContext.newContext(bean);
-            context.setFactory(new BeanPropertyFactory());
-            context.setLenient(true); //suppress JPathException and return null for inexistent paths
-            for(String expression : expressions) {
-                NodePointer np = (NodePointer)context.getPointer(expression);
-                if (np.isActual()) {
-                    extracted.put(expression, np.getValue());
-                } else {
-                    extracted.put(expression, null);
-                }
-            }
-            return extracted;
-        }
-        private static Class<?> getActualTypeArgument(Pointer p) throws IntrospectionException {
-            Class<?> clasz = null;
-            if ( p instanceof BeanPropertyPointer) {
-                BeanPropertyPointer bp = (BeanPropertyPointer)p;
-                Object baseValue = bp.getBaseValue();
-                if ( baseValue != null && baseValue instanceof Collection ) {
-                    Class<?>[] clasza = GenericTypeUtil.getActualTypeArguments(bp.getPropertyName(),bp.getBean().getClass());
-                    if ( clasza.length > 0 ) clasz = clasza[0];
-                } else if ( baseValue != null && baseValue instanceof Map ) {
-                    Class<?>[] clasza = GenericTypeUtil.getActualTypeArguments(bp.getPropertyName(),bp.getBean().getClass());
-                    if ( clasza.length > 1 ) clasz = clasza[1];
-                } else {
-                    PropertyDescriptor propertyDescriptor = new PropertyDescriptor(bp.getPropertyName(), bp.getBean().getClass());
-                    Method method = propertyDescriptor.getReadMethod();
-                    clasz = method.getReturnType();
-                }
-                return clasz;
+    public static Map extract(Object bean, Object[] xpathEntries) throws IntrospectionException {
+        Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();
+        return extract(bean,xpathEntries,handlers);
+    }
+
+    public static Map extract(Object bean, Object[] xpathEntries,Map<Event,EventHandler> handlers) {
+        Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathEntries));
+        Map extracted = new HashMap();
+        JXPathContext context = JXPathContext.newContext(bean);
+        context.setFactory(new BeanPropertyFactory(handlers));
+        context.setLenient(true); //suppress JPathException and return null for inexistent paths
+        for(String expression : xpathEntrySet) {
+            NodePointer np = (NodePointer)context.getPointer(expression);
+            if (np.isActual()) {
+                extracted.put(expression, np.getValue());
             } else {
-                NodePointer np = (NodePointer)p;
-                if ( np != null ) return getActualTypeArgument(np.getImmediateParentPointer());
-                else return null;
+                extracted.put(expression, null);
             }
         }
+        return extracted;
+    }
 
-
-        private static class BeanPropertyFactory extends AbstractFactory {
-             public boolean createObject(JXPathContext context,
-                Pointer pointer, Object parent, String name, int index){
-                 // The parameters may describe a collection element or an individual object.
-                 // It is up to the factory to infer which one it is. If it is a collection, the factory should check if the collection exists.
-                 // If not, it should create the collection. Then it should create the index'th element of the collection and return true.
-                try {
-                    if ( pointer instanceof BeanPropertyPointer) {
-                        BeanPropertyPointer beanPropertyPointer = (BeanPropertyPointer)pointer;
-                        if (beanPropertyPointer.isCollection()) {
-                            // a property representing a collection/map should already be initialized
-                            // therefore do not initialize the collection/map itself
-                            // but initialize the element of the collection at the specified index
-                            // TODO currently only a List of beans is supported!
-                            if ( beanPropertyPointer.getBaseValue() instanceof List) {
-                                Class<?>[] clasz = GenericTypeUtil.getActualTypeArguments(name,parent.getClass());
-                                List value = (List)beanPropertyPointer.getBaseValue();
-                                while(value.size() < index+1) {
-                                    Object instance = clasz[0].newInstance();
-                                    value.add(instance);
-                                }
-                                value.set(index, clasz[0].newInstance());
-                                BeanUtils.setProperty(parent, name, value);
-                            }
-                        } else {
-                            // a property representing a bean could be null
-                            // therefore initialize property
-                            PropertyDescriptor propertyDescriptor = new PropertyDescriptor(name, parent.getClass());
-                            Constructor constructor = ConstructorUtils.getAccessibleConstructor(propertyDescriptor.getPropertyType(), new Class[]{});
-                            if ( constructor != null ) {
-                                Object instance = constructor.newInstance();
-                                BeanUtils.setProperty(parent, name,instance );
-                            }
-                        }
-                    }
-                    return true;
-                } catch(Exception e) {
-                    e.printStackTrace();
-                    return false;
-                }
-         }
+    private static Class<?> getActualTypeArgument(Pointer p) throws IntrospectionException {
+        Class<?> clasz = null;
+        if ( p instanceof BeanPropertyPointer) {
+            BeanPropertyPointer bp = (BeanPropertyPointer)p;
+            Object baseValue = bp.getBaseValue();
+            if ( baseValue != null && baseValue instanceof Collection ) {
+                Class<?>[] clasza = GenericTypeUtil.getActualTypeArguments(bp.getPropertyName(),bp.getBean().getClass());
+                if ( clasza.length > 0 ) clasz = clasza[0];
+            } else if ( baseValue != null && baseValue instanceof Map ) {
+                Class<?>[] clasza = GenericTypeUtil.getActualTypeArguments(bp.getPropertyName(),bp.getBean().getClass());
+                if ( clasza.length > 1 ) clasz = clasza[1];
+            } else {
+                PropertyDescriptor propertyDescriptor = new PropertyDescriptor(bp.getPropertyName(), bp.getBean().getClass());
+                Method method = propertyDescriptor.getReadMethod();
+                clasz = method.getReturnType();
+            }
+            return clasz;
+        } else {
+            NodePointer np = (NodePointer)p;
+            if ( np != null ) return getActualTypeArgument(np.getImmediateParentPointer());
+            else return null;
         }
     }
+
+
+    private static class BeanPropertyFactory extends AbstractFactory {
+        private Map<Event,EventHandler> handlers;
+        BeanPropertyFactory(Map<Event,EventHandler> handlers) {
+            super();
+            this.handlers = handlers;            
+        }
+
+         public boolean createObject(JXPathContext context,
+            Pointer pointer, Object parent, String name, int index){
+             // The parameters may describe a collection element or an individual object.
+             // It is up to the factory to infer which one it is. If it is a collection, the factory should check if the collection exists.
+             // If not, it should create the collection. Then it should create the index'th element of the collection and return true.
+            try {
+                if ( pointer instanceof BeanPropertyPointer) {
+                    BeanPropertyPointer beanPropertyPointer = (BeanPropertyPointer)pointer;
+                    if (beanPropertyPointer.isCollection()) {
+                        // a property representing a collection/map should already be initialized
+                        // therefore do not initialize the collection/map itself
+                        // but initialize the element of the collection at the specified index
+                        // TODO currently only a List of beans is supported!
+                        if ( beanPropertyPointer.getBaseValue() instanceof List) {
+                            Class<?>[] clasz = GenericTypeUtil.getActualTypeArguments(name,parent.getClass());
+                            List value = (List)beanPropertyPointer.getBaseValue();
+                            while(value.size() < index+1) {
+                                Object instance = clasz[0].newInstance();
+                                value.add(instance);
+                                // raise event
+                            }
+                            Object instance = clasz[0].newInstance();
+                            value.set(index,instance);
+                            BeanUtils.setProperty(parent, name, value);
+                            raise(Event.AddedIndexedProperty,new Object[]{parent,name,index,instance});
+                        }
+                    } else {
+                        // a property representing a bean could be null
+                        // therefore initialize property
+                        PropertyDescriptor propertyDescriptor = new PropertyDescriptor(name, parent.getClass());
+                        Constructor constructor = ConstructorUtils.getAccessibleConstructor(propertyDescriptor.getPropertyType(), new Class[]{});
+                        if ( constructor != null ) {
+                            Object instance = constructor.newInstance();
+                            BeanUtils.setProperty(parent, name,instance );
+                            raise(Event.AddedProperty,new Object[]{parent,name,instance});
+                        }
+                    }
+                }
+                return true;
+            } catch(Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+     }
+      private void raise(Event event,Object[] data) {
+            EventHandler handler = this.handlers.get(event);
+            if ( handler != null ) handler.on(data);
+      }
+    }
+}
