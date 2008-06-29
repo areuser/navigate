@@ -16,12 +16,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/EventHandler.java" />
+      <change type="DELETED" beforePath="C:\projects\navigate\src\test\java\nl\ucan\navigate\util\BidiList.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java" afterPath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java" afterPath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/navigate.iws" afterPath="$PROJECT_DIR$/navigate.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/BidiList.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java" afterPath="$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java" />
     </list>
     <ignored path="navigate.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,7 +84,7 @@
       <file leaf-file-name="NavigatorTest.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="63" selection-start="2450" selection-end="2450" vertical-scroll-proportion="0.79904306">
+            <state line="174" column="0" selection-start="6782" selection-end="6782" vertical-scroll-proportion="0.8076152">
               <folding />
             </state>
           </provider>
@@ -96,7 +93,7 @@
       <file leaf-file-name="Navigator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="196" column="0" selection-start="10057" selection-end="10057" vertical-scroll-proportion="3.1071863">
+            <state line="196" column="0" selection-start="10057" selection-end="10057" vertical-scroll-proportion="5.2706614">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -107,25 +104,7 @@
       <file leaf-file-name="EventHandler.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/EventHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="17" selection-start="720" selection-end="720" vertical-scroll-proportion="0.38636363">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PreModification.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/PreModification.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="17" selection-start="716" selection-end="716" vertical-scroll-proportion="0.40669855">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Transformer.class" pinned="false" current="false" current-in-tab="false">
-        <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-collections/commons-collections/3.2/commons-collections-3.2.jar!/org/apache/commons/collections/Transformer.class">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="155" selection-end="245" vertical-scroll-proportion="0.08133971">
+            <state line="19" column="17" selection-start="720" selection-end="720" vertical-scroll-proportion="0.6472946">
               <folding />
             </state>
           </provider>
@@ -134,7 +113,7 @@
       <file leaf-file-name="Resource.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Resource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.29784688">
+            <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.5691383">
               <folding />
             </state>
           </provider>
@@ -143,7 +122,7 @@
       <file leaf-file-name="DefaultValueConvertor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/DefaultValueConvertor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.4473684">
+            <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.749499">
               <folding />
             </state>
           </provider>
@@ -152,7 +131,7 @@
       <file leaf-file-name="ValueConvertor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.40669855">
+            <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.68136275">
               <folding />
             </state>
           </provider>
@@ -161,7 +140,7 @@
       <file leaf-file-name="StrictlyNonBlankStringConverter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.3325359">
+            <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.55711424">
               <folding />
             </state>
           </provider>
@@ -170,7 +149,7 @@
       <file leaf-file-name="Task.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="32" selection-start="884" selection-end="892" vertical-scroll-proportion="0.15669857">
+            <state line="27" column="51" selection-start="974" selection-end="974" vertical-scroll-proportion="-1.5430862">
               <folding />
             </state>
           </provider>
@@ -565,7 +544,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299435" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39322034" order="3" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39322034" order="3" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
@@ -676,13 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/BidiList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="789" selection-end="789" vertical-scroll-proportion="0.022696929">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../../Documents and Settings/areuser/.m2/repository/commons-collections/commons-collections/3.2/commons-collections-3.2.jar!/org/apache/commons/collections/Transformer.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="0" selection-start="155" selection-end="245" vertical-scroll-proportion="0.08133971">
@@ -692,14 +664,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/DefaultValueConvertor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.4473684">
+        <state line="28" column="13" selection-start="1051" selection-end="1051" vertical-scroll-proportion="0.749499">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/ValueConvertor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.40669855">
+        <state line="20" column="17" selection-start="721" selection-end="721" vertical-scroll-proportion="0.68136275">
           <folding />
         </state>
       </provider>
@@ -711,53 +683,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Resource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.29784688">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/PreModification.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="716" selection-end="716" vertical-scroll-proportion="0.40669855">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="32" selection-start="884" selection-end="892" vertical-scroll-proportion="0.15669857">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/StrictlyNonBlankStringConverter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.3325359">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/EventHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="17" selection-start="720" selection-end="720" vertical-scroll-proportion="0.38636363">
+        <state line="25" column="13" selection-start="913" selection-end="913" vertical-scroll-proportion="0.55711424">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/Navigator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="196" column="0" selection-start="10057" selection-end="10057" vertical-scroll-proportion="3.1071863">
+        <state line="196" column="0" selection-start="10057" selection-end="10057" vertical-scroll-proportion="5.2706614">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/nl/ucan/navigate/convertor/EventHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="17" selection-start="720" selection-end="720" vertical-scroll-proportion="0.6472946">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Resource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="13" selection-start="712" selection-end="712" vertical-scroll-proportion="0.5691383">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/util/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="51" selection-start="974" selection-end="974" vertical-scroll-proportion="-1.5430862">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/nl/ucan/navigate/NavigatorTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="63" selection-start="2450" selection-end="2450" vertical-scroll-proportion="0.79904306">
+        <state line="174" column="0" selection-start="6782" selection-end="6782" vertical-scroll-proportion="0.8076152">
           <folding />
         </state>
       </provider>
