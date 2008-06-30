@@ -161,10 +161,11 @@ public class NavigatorTest {
 
         Object[] xpathExtEntries = new String[]{
                 "name"
+                ,"completion"
+                ,"assigned/role"
                 ,"subTask[1]/name"
                 ,"subTask[1]/assigned/role"
-                ,"details[@name='project']"
-                ,"assigned/role"
+                ,"details[@name='license']"                
         };
         Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathExtEntries));
         Map extract = Navigator.extract(task,xpathEntrySet);
