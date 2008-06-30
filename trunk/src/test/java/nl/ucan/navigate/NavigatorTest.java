@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections.SetUtils;
 
 import java.beans.IntrospectionException;
 import java.util.*;
@@ -49,30 +50,32 @@ public class NavigatorTest {
                  Task task = (Task)o[0];
                  String property = (String)o[1]; // subtask
                  Integer index = (Integer)o[2]; // 0
-                 Task  value = (Task)o[3]; // 
+                 Task  value = (Task)o[3];
             }
         });
-        Navigator.populate(simple,new Object[][]{
+        Object[][] xpathPopEntries = new Object[][]{
             {"name","deploy project"}
             ,{"subTask[1]/name","write article"}
             ,{"subTask[1]/assigned/role","volunteer"}
             ,{"details[@name='project']","beannav"}
             ,{"assigned/role","founder"}
-        },handler
-        );
+        };
+        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+        Navigator.populate(simple,xpathEntryMap,handler);
     }
 
     @Test
     public void example() throws IntrospectionException {
         Task simple = new Task();
-        Navigator.populate(simple,new Object[][]{
+        Object[][] xpathPopEntries = new Object[][]{
             {"name","deploy project"}
             ,{"subTask[1]/name","write article"}
             ,{"subTask[1]/assigned/role","volunteer"}
             ,{"details[@name='project']","beannav"}
             ,{"assigned/role","founder"}
-        });
-
+        };
+        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+        Navigator.populate(simple,xpathEntryMap);
         Task complex = new Task();
         complex.setName("deploy project");
         List<Task> subTasks = complex.getSubTask();
@@ -94,13 +97,15 @@ public class NavigatorTest {
         Assert.assertEquals(simple.getDetails().get("project"),complex.getDetails().get("project"));
         Assert.assertEquals(simple.getAssigned().getRole(),complex.getAssigned().getRole());
 
-        Map extract = Navigator.extract(simple,new String[]{
+        Object[] xpathExtEntries = new String[]{
                 "name"
                 ,"subTask[1]/name"
                 ,"subTask[1]/assigned/role"
                 ,"details[@name='project']"
                 ,"assigned/role"
-        });
+        }; 
+        Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathExtEntries));
+        Map extract = Navigator.extract(simple,xpathEntrySet);
 
         Assert.assertEquals(extract.get("name"),complex.getName());
         Assert.assertEquals(extract.get("subTask[1]/name"),complex.getSubTask().get(0).getName());
@@ -112,7 +117,7 @@ public class NavigatorTest {
 
     @Test
     public void populate() throws IntrospectionException {
-        Object[][] init = new Object[][]{
+        Object[][] xpathPopEntries = new Object[][]{
                 {"name","promote xbean"}
                 ,{"completion",0.01F}
                 ,{"assigned/role","founder"}
@@ -120,7 +125,8 @@ public class NavigatorTest {
                 ,{"subTask[1]/assigned/role","marketing"}
                 ,{"details[@name='license']","Apache License"}
         };
-        Task task = (Task) Navigator.populate(new Task(),init);
+        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);        
+        Task task = (Task) Navigator.populate(new Task(),xpathEntryMap);
         Assert.assertEquals(task.getName(),"promote xbean");
         Assert.assertEquals(task.getCompletion(),0.01F);
         Assert.assertEquals(task.getAssigned().getRole(),"founder");
@@ -128,10 +134,11 @@ public class NavigatorTest {
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"marketing");
         Assert.assertEquals(task.getDetails().get("license"),"Apache License");
         //
-        Object[][] modified = new Object[][]{
+        xpathPopEntries = new Object[][]{
                 {"subTask[assigned/role='marketing']/assigned/role","founder"}
         };
-        task = (Task) Navigator.populate(task,modified);
+        xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);        
+        task = (Task) Navigator.populate(task,xpathEntryMap);
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder");
     }
 
@@ -152,14 +159,16 @@ public class NavigatorTest {
         subTasks.add(subTask);
         task.getDetails().put("license","Apache License");
 
-        Map extract = Navigator.extract(task, new Object[]{
-           "name"
-           ,"completion"
-           ,"assigned/role"
-           ,"subTask[1]/name"
-           ,"subTask[1]/assigned/role"
-           ,"details[@name='license']"
-        });
+        Object[] xpathExtEntries = new String[]{
+                "name"
+                ,"subTask[1]/name"
+                ,"subTask[1]/assigned/role"
+                ,"details[@name='project']"
+                ,"assigned/role"
+        };
+        Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathExtEntries));
+        Map extract = Navigator.extract(task,xpathEntrySet);
+
 
         Assert.assertEquals(extract.get("name"),"promote xbean");
         Assert.assertEquals(extract.get("completion"),0.01F);

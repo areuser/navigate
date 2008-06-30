@@ -45,21 +45,20 @@ public class Navigator {
     public enum Event {
         AddedIndexedProperty, AddedProperty
     };
-    public static Object populate(Object bean, Object[][] xpathEntries) throws IntrospectionException {
+    public static Object populate(Object bean, Map  xpathEntryMap) throws IntrospectionException {
         ValueConvertor valueConvertor =   new DefaultValueConvertor();
         Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();        
-        return populate(bean,xpathEntries,valueConvertor,handlers);
+        return populate(bean,xpathEntryMap,valueConvertor,handlers);
     }
-    public static Object populate(Object bean, Object[][] xpathEntries,ValueConvertor valueConvertor) throws IntrospectionException {
+    public static Object populate(Object bean, Map  xpathEntryMap,ValueConvertor valueConvertor) throws IntrospectionException {
         Map<Event, EventHandler> handlers = new HashMap<Event,EventHandler>();
-        return populate(bean,xpathEntries,valueConvertor,handlers);
+        return populate(bean,xpathEntryMap,valueConvertor,handlers);
     }
-    public static Object populate(Object bean, Object[][] xpathEntries,Map<Event,EventHandler> handlers) throws IntrospectionException {
+    public static Object populate(Object bean, Map  xpathEntryMap,Map<Event,EventHandler> handlers) throws IntrospectionException {
         ValueConvertor valueConvertor =   new DefaultValueConvertor();
-        return populate(bean,xpathEntries,valueConvertor,handlers);
+        return populate(bean,xpathEntryMap,valueConvertor,handlers);
     }
-    public static Object populate(Object bean,Object[][] xpathEntries, ValueConvertor valueConvertor,Map<Event,EventHandler> handlers) throws IntrospectionException {
-        Map  xpathEntryMap = MapUtils.putAll(new HashMap(),xpathEntries);
+    public static Object populate(Object bean,Map xpathEntryMap, ValueConvertor valueConvertor,Map<Event,EventHandler> handlers) throws IntrospectionException {
         JXPathContext context = JXPathContext.newContext(bean);
         context.setFactory(new BeanPropertyFactory(handlers));
         context.setLenient(true); //suppress JPathException for inexistent paths
@@ -93,19 +92,19 @@ public class Navigator {
         return bean;
     };
 
-    public static Map extract(Object bean, Object[] xpathEntries) throws IntrospectionException {
+    public static Map extract(Object bean, Set xpathEntries) throws IntrospectionException {
         Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();
         return extract(bean,xpathEntries,handlers);
     }
 
-    public static Map extract(Object bean, Object[] xpathEntries,Map<Event,EventHandler> handlers) {
-        Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathEntries));
+    public static Map extract(Object bean, Set xpathEntries,Map<Event,EventHandler> handlers) {
+
         Map extracted = new HashMap();
         JXPathContext context = JXPathContext.newContext(bean);
         context.setFactory(new BeanPropertyFactory(handlers));
         context.setLenient(true); //suppress JPathException and return null for inexistent paths
-        for(String expression : xpathEntrySet) {
-            NodePointer np = (NodePointer)context.getPointer(expression);
+        for(Object expression : xpathEntries) {
+            NodePointer np = (NodePointer)context.getPointer((String)expression);
             if (np.isActual()) {
                 extracted.put(expression, np.getValue());
             } else {
