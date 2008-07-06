@@ -47,7 +47,7 @@ public class StrictlyNonBlankStringConverter extends AbstractConverter {
                 return null;
             }
             else {
-                log.debug("value is whitespace, empty or null ");
+                log.debug("value is no whitespace, empty or null ");
                 log.debug("Converted to String value "+string);
                 return string;
             }

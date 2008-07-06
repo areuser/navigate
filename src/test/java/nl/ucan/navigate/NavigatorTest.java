@@ -42,6 +42,17 @@ public class NavigatorTest {
     }
 
     @Test
+    public void nullity() throws IntrospectionException {
+        Task simple = new Task();
+        Object[][] xpathPopEntries = new Object[][]{
+            {"id","null"}
+        };
+        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+        Navigator.populate(simple,xpathEntryMap);
+    }
+
+
+    @Test
     public void test() throws IntrospectionException {
         Task simple = new Task();
         Map<Navigator.Event, EventHandler> handler = new HashMap<Navigator.Event, EventHandler>();
