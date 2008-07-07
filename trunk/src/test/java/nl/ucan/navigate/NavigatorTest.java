@@ -5,13 +5,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.SetUtils;
+import org.apache.commons.beanutils.*;
 
 import java.beans.IntrospectionException;
 import java.util.*;
+import java.lang.reflect.InvocationTargetException;
 
 import nl.ucan.navigate.util.Task;
 import nl.ucan.navigate.util.Resource;
 import nl.ucan.navigate.convertor.EventHandler;
+import nl.ucan.navigate.convertor.DefaultDirtyBeanConvertor;
+import nl.ucan.navigate.convertor.DirtyBeanConvertor;
+import nl.ucan.navigate.convertor.DefaultValueConvertor;
 import junit.framework.Assert;/*
  * Copyright 2007-2008 the original author or authors.
  *
@@ -51,6 +56,89 @@ public class NavigatorTest {
         Navigator.populate(simple,xpathEntryMap);
     }
 
+    @Test
+    public void enrich()  {
+        try {
+            Task simple = new Task();
+            Map<Navigator.Event, EventHandler> handler = new HashMap<Navigator.Event, EventHandler>();
+            DirtyBeanConvertor ddbc = new DirtyBeanConvertor() {
+                public Object evaluate(Object bean, String property, Object value) {
+                    try {
+                        Object version = BeanUtils.getProperty(bean,"version");
+                        Object id = BeanUtils.getProperty(bean,"id");
+                        if ( version != null && id != null ) {
+                            if (GenericTypeUtil.isEmpty(bean,new String[]{"id","version"})) {
+                                Task simple = (Task)ConstructorUtils.invokeConstructor(bean.getClass(),null);
+                                simple.setName("piet");
+                                simple.getSubTask().add(new Task());
+                                // simple.setDueDate(new Date());
+                                // simple.setStartDate(new Date());
+                                //
+                                // load bean from persisted store
+
+                                //
+                                // copy properties from loaded bean to transient bean in memory
+                                PropertyUtilsBean pub = new PropertyUtilsBean();
+                                pub.copyProperties(bean,simple);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace(); 
+                    } 
+                    return value;
+                }            
+            };
+            Object[][] xpathPopEntries = new Object[][]{
+                {"id","1"}
+                ,{"version","1"}
+//                  ,{"name","deploy project"}                    
+//                ,{"subTask[1]/name","write article"}
+//                ,{"subTask[1]/assigned/role","volunteer"}
+//                ,{"details[@name='project']","beannav"}
+//                ,{"assigned/role","founder"}
+            };
+            Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+            Navigator.populate(simple,xpathEntryMap,new DefaultValueConvertor(), ddbc);
+
+
+            // Task dummy = new Task();
+            // dummy.setName("task");
+            // dummy = (Task)genericService.merge(dummy);
+            // Long id = dummy.getId();
+            // Long version = dummy.getVersion();
+            //
+            // als alleen id en version gegeven, voer dan load uit van object
+            // als meer gegeven, laat dan als het is
+//            Task test = new Task();
+//            test.setId(1L);
+//            test.setDetails(new HashMap());
+//            List list = new ArrayList();
+//            list.add(new Task());
+//            test.setSubTask(new ArrayList(list));
+//            int j = 2;
+           //  Map map = PropertyUtils.describe(test);
+
+            // als index property -> size = 0
+            // als mapped property -> size =  0
+            // als simple property -> waarde null
+            
+//>
+//> The get(property, index) does either ....
+//>    return ((List)values.get(name)).get(index)
+//> or....
+//>    return Array.get(values.get(name), index)
+//>
+//> The get(name, key) does....
+//>    return ((Map)values.get(name)).get(key)
+
+            //
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
     @Test
     public void test() throws IntrospectionException {

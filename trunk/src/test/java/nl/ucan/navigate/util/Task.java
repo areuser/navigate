@@ -19,6 +19,25 @@ import java.util.*;/*
  * since  : 0.1
   */
 public class Task {
+      private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    private Long version;
       private String name;
       private Date   startDate;
       private Date   dueDate;

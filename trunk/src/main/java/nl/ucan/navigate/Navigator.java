@@ -9,7 +9,6 @@ import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.jxpath.AbstractFactory;
 import org.apache.commons.jxpath.ri.model.NodePointer;
 import org.apache.commons.jxpath.ri.model.beans.BeanPropertyPointer;
-import org.apache.commons.collections.MapUtils;
 
 import java.util.*;
 import java.beans.IntrospectionException;
@@ -17,9 +16,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
 
-import nl.ucan.navigate.convertor.DefaultValueConvertor;
-import nl.ucan.navigate.convertor.ValueConvertor;
-import nl.ucan.navigate.convertor.EventHandler;
+import nl.ucan.navigate.convertor.*;
 
 /*
 * Copyright 2007-2008 the original author or authors.
@@ -43,26 +40,33 @@ public class Navigator {
     private static Log log = LogFactory.getLog(Navigator.class);
     // TODO decide : keep EventHandler or use observer-observerable pattern
     public enum Event {
-        AddedIndexedProperty, AddedProperty
+        AddedIndexedProperty, AddedProperty, BeanFlaggedAsDirty
     };
     public static Object populate(Object bean, Map  xpathEntryMap) throws IntrospectionException {
         ValueConvertor valueConvertor =   new DefaultValueConvertor();
-        Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();        
-        return populate(bean,xpathEntryMap,valueConvertor,handlers);
+        Map<Event,EventHandler> handlers = new HashMap<Event,EventHandler>();
+        DirtyBeanConvertor dirtyBeanConvertor =   new DefaultDirtyBeanConvertor();
+        return populate(bean,xpathEntryMap,valueConvertor,handlers,dirtyBeanConvertor);
     }
     public static Object populate(Object bean, Map  xpathEntryMap,ValueConvertor valueConvertor) throws IntrospectionException {
         Map<Event, EventHandler> handlers = new HashMap<Event,EventHandler>();
-        return populate(bean,xpathEntryMap,valueConvertor,handlers);
+        DirtyBeanConvertor dirtyBeanConvertor =   new DefaultDirtyBeanConvertor();
+        return populate(bean,xpathEntryMap,valueConvertor,handlers,dirtyBeanConvertor);
+    }
+    public static Object populate(Object bean, Map  xpathEntryMap,ValueConvertor valueConvertor, DirtyBeanConvertor dirtyBeanConvertor) throws IntrospectionException {
+        Map<Event, EventHandler> handlers = new HashMap<Event,EventHandler>();
+        return populate(bean,xpathEntryMap,valueConvertor,handlers,dirtyBeanConvertor);
     }
     public static Object populate(Object bean, Map  xpathEntryMap,Map<Event,EventHandler> handlers) throws IntrospectionException {
         ValueConvertor valueConvertor =   new DefaultValueConvertor();
-        return populate(bean,xpathEntryMap,valueConvertor,handlers);
+        DirtyBeanConvertor dirtyBeanConvertor =   new DefaultDirtyBeanConvertor();
+        return populate(bean,xpathEntryMap,valueConvertor,handlers,dirtyBeanConvertor);
     }
-    public static Object populate(Object bean,Map xpathEntryMap, ValueConvertor valueConvertor,Map<Event,EventHandler> handlers) throws IntrospectionException {
+    public static Object populate(Object bean,Map xpathEntryMap, ValueConvertor valueConvertor,Map<Event,EventHandler> handlers, DirtyBeanConvertor dirtyBeanConvertor) throws IntrospectionException {
         JXPathContext context = JXPathContext.newContext(bean);
         context.setFactory(new BeanPropertyFactory(handlers));
         context.setLenient(true); //suppress JPathException for inexistent paths
-
+        //
         // 1. Navigator and visit xpath node and create required path of beans and collections if value != null
         Iterator itExpPathValue = xpathEntryMap.entrySet().iterator();
         while(itExpPathValue.hasNext()) {
@@ -75,6 +79,7 @@ public class Navigator {
                  context.createPath(expression);
              }
         }
+        //
         // 2. Set value xpath node; ignore xpath nodes of inexistent paths
         itExpPathValue = xpathEntryMap.entrySet().iterator();
         while(itExpPathValue.hasNext()) {
@@ -86,6 +91,26 @@ public class Navigator {
                 Class<?> clasz = getActualTypeArgument(np);
                 value = valueConvertor.evaluate(expression,value,clasz);
                 np.setValue(value);
+            }
+        }
+        //
+        // 3. Flag beans that are potentially modified as dirty
+        Collection dirtyBeans = new HashSet();
+        itExpPathValue = xpathEntryMap.entrySet().iterator();
+        while(itExpPathValue.hasNext()) {
+            Map.Entry entry = (Map.Entry)itExpPathValue.next();
+            String expression = (String)entry.getKey();
+            Object value = entry.getValue();
+            NodePointer np = (NodePointer)context.getPointer(expression);
+            if ( np.isActual()) {
+                if ( np instanceof BeanPropertyPointer ) {
+                    // propertyName is role, bean is resource
+                    BeanPropertyPointer bpp = (BeanPropertyPointer)np;
+                    if (!dirtyBeans.contains(bpp.getBean())) {
+                        dirtyBeans.add(bpp.getBean());
+                        bpp.setValue(dirtyBeanConvertor.evaluate(bpp.getBean(),bpp.getPropertyName(),bpp.getValue()));
+                    }                   
+                }
             }
         }
 
@@ -138,7 +163,6 @@ public class Navigator {
         }
     }
 
-
     private static class BeanPropertyFactory extends AbstractFactory {
         private Map<Event,EventHandler> handlers;
         BeanPropertyFactory(Map<Event,EventHandler> handlers) {
@@ -170,7 +194,7 @@ public class Navigator {
                             Object instance = clasz[0].newInstance();
                             value.set(index,instance);
                             BeanUtils.setProperty(parent, name, value);
-                            raise(Event.AddedIndexedProperty,new Object[]{parent,name,index,instance});
+                            raise(Event.AddedIndexedProperty,new Object[]{parent,name,index,instance},this.handlers);
                         }
                     } else {
                         // a property representing a bean could be null
@@ -180,7 +204,7 @@ public class Navigator {
                         if ( constructor != null ) {
                             Object instance = constructor.newInstance();
                             BeanUtils.setProperty(parent, name,instance );
-                            raise(Event.AddedProperty,new Object[]{parent,name,instance});
+                            raise(Event.AddedProperty,new Object[]{parent,name,instance},this.handlers);
                         }
                     }
                 }
@@ -190,9 +214,9 @@ public class Navigator {
                 return false;
             }
      }
-      private void raise(Event event,Object[] data) {
-            EventHandler handler = this.handlers.get(event);
-            if ( handler != null ) handler.on(data);
-      }
+    }
+    private static  void raise(Event event,Object[] data,Map<Event,EventHandler> handlers) {
+         EventHandler handler = handlers.get(event);
+         if ( handler != null ) handler.on(data);
     }
 }
