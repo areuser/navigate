@@ -1,9 +1,13 @@
 package nl.ucan.navigate;
 
+import org.apache.commons.beanutils.DynaBean;
+import org.apache.commons.beanutils.WrapDynaBean;
+import org.apache.commons.beanutils.DynaClass;
+import org.apache.commons.beanutils.DynaProperty;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -39,4 +43,33 @@ public class GenericTypeUtil {
         }
         return (Class<?>[])types.toArray(new Class<?>[types.size()]);
 	}
+    public static boolean isEmpty(Object bean,String[] exclude) {
+        boolean isEmpty = true;
+        //
+        Collection excludes = new ArrayList(( exclude == null ? new ArrayList() : Arrays.asList(exclude) ));
+        excludes.add("class"); // class is a standard property that is being excluded
+        DynaBean dynaBean = new WrapDynaBean(bean);
+        DynaClass dynaClass = dynaBean.getDynaClass();
+        DynaProperty[] dynaProperties = dynaClass.getDynaProperties();
+        for ( DynaProperty property : dynaProperties ){
+            if ( excludes.contains(property.getName())) continue;
+            if ( property.isIndexed() ) {
+                if ( property.getClass().isArray() ) {
+                    Object[] value = (Object[])dynaBean.get(property.getName());
+                    isEmpty &= ( value == null || value.length == 0 );
+                } else {
+                    Collection value = (Collection)dynaBean.get(property.getName());
+                    isEmpty &= ( value == null || value.size() == 0 );
+                }
+            } else if ( property.isMapped()) {
+                Map value = (Map)dynaBean.get(property.getName());
+                isEmpty &= ( value == null || value.size() == 0 );
+            } else {
+                Object value = dynaBean.get(property.getName());
+                isEmpty &= ( value == null );
+            }
+        }
+        //
+        return isEmpty;
+    }    
 }
