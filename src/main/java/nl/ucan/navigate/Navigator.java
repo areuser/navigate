@@ -40,7 +40,7 @@ public class Navigator {
     private static Log log = LogFactory.getLog(Navigator.class);
     // TODO decide : keep EventHandler or use observer-observerable pattern
     public enum Event {
-        AddedIndexedProperty, AddedProperty, BeanFlaggedAsDirty
+        AddedIndexedProperty, AddedProperty
     };
     public static Object populate(Object bean, Map  xpathEntryMap) throws IntrospectionException {
         ValueConvertor valueConvertor =   new DefaultValueConvertor();

@@ -6,10 +6,13 @@ import org.junit.Test;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.SetUtils;
 import org.apache.commons.beanutils.*;
+import org.apache.commons.jxpath.JXPathException;
 
 import java.beans.IntrospectionException;
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
+import java.lang.annotation.Annotation;
 
 import nl.ucan.navigate.util.Task;
 import nl.ucan.navigate.util.Resource;
@@ -45,6 +48,15 @@ public class NavigatorTest {
     @After
     public void teardown() {
     }
+    @Test(expected = JXPathException.class)
+    public void unknown() throws IntrospectionException {
+        Task simple = new Task();
+        Object[][] xpathPopEntries = new Object[][]{
+            {"unknown","2"}
+        };
+        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+        Navigator.populate(simple,xpathEntryMap); // throws JXPathException because unknown is not a property
+    }
 
     @Test
     public void nullity() throws IntrospectionException {
@@ -57,9 +69,9 @@ public class NavigatorTest {
     }
 
     @Test
-    public void enrich()  {
-        try {
-            Task simple = new Task();
+    public void enrich() throws Exception  {
+        final String NAME = "piet";
+        Task simple = new Task();
             Map<Navigator.Event, EventHandler> handler = new HashMap<Navigator.Event, EventHandler>();
             DirtyBeanConvertor ddbc = new DirtyBeanConvertor() {
                 public Object evaluate(Object bean, String property, Object value) {
@@ -69,15 +81,8 @@ public class NavigatorTest {
                         if ( version != null && id != null ) {
                             if (GenericTypeUtil.isEmpty(bean,new String[]{"id","version"})) {
                                 Task simple = (Task)ConstructorUtils.invokeConstructor(bean.getClass(),null);
-                                simple.setName("piet");
+                                simple.setName(NAME);
                                 simple.getSubTask().add(new Task());
-                                // simple.setDueDate(new Date());
-                                // simple.setStartDate(new Date());
-                                //
-                                // load bean from persisted store
-
-                                //
-                                // copy properties from loaded bean to transient bean in memory
                                 PropertyUtilsBean pub = new PropertyUtilsBean();
                                 pub.copyProperties(bean,simple);
                             }
@@ -91,76 +96,11 @@ public class NavigatorTest {
             Object[][] xpathPopEntries = new Object[][]{
                 {"id","1"}
                 ,{"version","1"}
-//                  ,{"name","deploy project"}                    
-//                ,{"subTask[1]/name","write article"}
-//                ,{"subTask[1]/assigned/role","volunteer"}
-//                ,{"details[@name='project']","beannav"}
-//                ,{"assigned/role","founder"}
             };
             Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
-            Navigator.populate(simple,xpathEntryMap,new DefaultValueConvertor(), ddbc);
-
-
-            // Task dummy = new Task();
-            // dummy.setName("task");
-            // dummy = (Task)genericService.merge(dummy);
-            // Long id = dummy.getId();
-            // Long version = dummy.getVersion();
-            //
-            // als alleen id en version gegeven, voer dan load uit van object
-            // als meer gegeven, laat dan als het is
-//            Task test = new Task();
-//            test.setId(1L);
-//            test.setDetails(new HashMap());
-//            List list = new ArrayList();
-//            list.add(new Task());
-//            test.setSubTask(new ArrayList(list));
-//            int j = 2;
-           //  Map map = PropertyUtils.describe(test);
-
-            // als index property -> size = 0
-            // als mapped property -> size =  0
-            // als simple property -> waarde null
-            
-//>
-//> The get(property, index) does either ....
-//>    return ((List)values.get(name)).get(index)
-//> or....
-//>    return Array.get(values.get(name), index)
-//>
-//> The get(name, key) does....
-//>    return ((Map)values.get(name)).get(key)
-
-            //
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-    }
-
-    @Test
-    public void test() throws IntrospectionException {
-        Task simple = new Task();
-        Map<Navigator.Event, EventHandler> handler = new HashMap<Navigator.Event, EventHandler>();
-        handler.put(Navigator.Event.AddedIndexedProperty, new EventHandler(){
-            public void on(Object[] o) {
-                 Task task = (Task)o[0];
-                 String property = (String)o[1]; // subtask
-                 Integer index = (Integer)o[2]; // 0
-                 Task  value = (Task)o[3];
-            }
-        });
-        Object[][] xpathPopEntries = new Object[][]{
-            {"name","deploy project"}
-            ,{"subTask[1]/name","write article"}
-            ,{"subTask[1]/assigned/role","volunteer"}
-            ,{"details[@name='project']","beannav"}
-            ,{"assigned/role","founder"}
-        };
-        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
-        Navigator.populate(simple,xpathEntryMap,handler);
+            simple = (Task)Navigator.populate(simple,xpathEntryMap,new DefaultValueConvertor(), ddbc);
+            String s = simple.getName();
+            Assert.assertEquals(simple.getName(),NAME);
     }
 
     @Test
