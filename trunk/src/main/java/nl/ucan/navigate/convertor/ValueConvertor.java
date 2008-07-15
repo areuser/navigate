@@ -1,4 +1,12 @@
 package nl.ucan.navigate.convertor;
+
+import org.apache.commons.beanutils.ConvertUtilsBean;
+import org.apache.commons.beanutils.converters.LongConverter;
+import org.apache.commons.beanutils.converters.IntegerConverter;
+import org.apache.commons.beanutils.converters.FloatConverter;
+import org.apache.commons.beanutils.converters.SqlDateConverter;
+
+import java.util.Date;
 /*
  * Copyright 2007-2008 the original author or authors.
  *
@@ -18,7 +26,22 @@ package nl.ucan.navigate.convertor;
  * since  : 0.1
   */
 
-public interface ValueConvertor {
-    public Object evaluate(String xpath, Object value);
-    public Object evaluate(String xpath, Object value,Class clasz);
+public class ValueConvertor {
+    private static ConvertUtilsBean valueConvertor = new ConvertUtilsBean();
+    static {
+        valueConvertor.register(new LongConverter(null), Long.class);
+        valueConvertor.register(new LongConverter(null), Long.TYPE);
+        valueConvertor.register(new IntegerConverter(null), Integer.TYPE);
+        valueConvertor.register(new IntegerConverter(null), Integer.class);
+        valueConvertor.register(new FloatConverter(null), Float.TYPE);
+        valueConvertor.register(new FloatConverter(null), Float.class);
+        valueConvertor.register(new SqlDateConverter(null), Date.class);
+        valueConvertor.register(new StrictlyNonBlankStringConverter(null), String.class);
+    }
+    public static Object evaluate(String xpath, Object value) {
+        return valueConvertor.convert(value);
+    }
+    public static Object evaluate(String xpath, Object value,Class clasz) {
+        return valueConvertor.convert(value,clasz);        
+    }
 }

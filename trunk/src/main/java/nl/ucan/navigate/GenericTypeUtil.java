@@ -4,6 +4,8 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.WrapDynaBean;
 import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
@@ -11,6 +13,8 @@ import java.util.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+
+import com.sun.jmx.snmp.tasks.Task;
 /*
  * Copyright 2007-2008 the original author or authors.
  *
@@ -31,6 +35,8 @@ import java.lang.reflect.Type;
   */
 
 public class GenericTypeUtil {
+    private static Log log = LogFactory.getLog(GenericTypeUtil.class);
+    
     public static Class<?>[] getActualTypeArguments(String property,Class clasz) throws IntrospectionException {
 		List<Class<?>> types = new ArrayList<Class<?>>();
 		PropertyDescriptor propertyDescriptor = new PropertyDescriptor(property, clasz);
@@ -43,6 +49,7 @@ public class GenericTypeUtil {
         }
         return (Class<?>[])types.toArray(new Class<?>[types.size()]);
 	}
+
     public static boolean isEmpty(Object bean,String[] exclude) {
         boolean isEmpty = true;
         //
@@ -57,16 +64,25 @@ public class GenericTypeUtil {
                 if ( property.getClass().isArray() ) {
                     Object[] value = (Object[])dynaBean.get(property.getName());
                     isEmpty &= ( value == null || value.length == 0 );
+                    log.info("property "+property.getName()+ (isEmpty ? " is empty " : " is an array of length "+value.length));
                 } else {
                     Collection value = (Collection)dynaBean.get(property.getName());
                     isEmpty &= ( value == null || value.size() == 0 );
+                    log.info("property "+property.getName()+ (isEmpty ? " is empty " : " is a collection of length "+value.size()));
                 }
             } else if ( property.isMapped()) {
                 Map value = (Map)dynaBean.get(property.getName());
                 isEmpty &= ( value == null || value.size() == 0 );
+                log.info("property "+property.getName()+ (isEmpty ? " is empty " : " is a map of length "+value.size()));
+                
+            } else if (property.getType().isAssignableFrom(Set.class)) {
+                Set value = (Set)dynaBean.get(property.getName());
+                isEmpty &= ( value == null || value.size() == 0 );
+                log.info("property "+property.getName()+ (isEmpty ? " is empty " : " is a set of length "+value.size()));                
             } else {
                 Object value = dynaBean.get(property.getName());
                 isEmpty &= ( value == null );
+                log.info("property "+property.getName()+ (isEmpty ? " is empty " : " has value "+value));
             }
         }
         //

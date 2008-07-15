@@ -1,4 +1,4 @@
-package nl.ucan.navigate.convertor;/*
+package nl.ucan.navigate;/*
  * Copyright 2007-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,10 @@ package nl.ucan.navigate.convertor;/*
  * limitations under the License.
  *
  * author : Arnold Reuser
- * since  : 0.1
+ * since  : 0.2.4
   */
-
-public class DefaultDirtyBeanConvertor implements DirtyBeanConvertor {
-    public Object evaluate(Object bean, String property, Object value) {
-        return value;        
-    }
+public abstract class Property {
+    public void indexed(Object bean, String property, int index, Object value) {}
+    public void mapped(Object bean, String name, Object key, Object value) {}
+    public void simple(Object bean, String property, Object value) {}
 }
