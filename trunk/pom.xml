@@ -3,7 +3,7 @@
  <groupId>nl.ucan</groupId>
  <artifactId>navigate</artifactId>
  <packaging>jar</packaging>
- <version>0.2.4-SNAPSHOT</version>
+ <version>0.2.4</version>
  <name>navigate</name>
   <url>http://code.google.com/p/navigate/</url>
   <description>populate, extract and create beans on the fly by using xpath expressions</description>
@@ -26,8 +26,8 @@
       </developer>
   </developers>
     <scm>
-      <connection>scm:svn:http://navigate.googlecode.com/svn/tags</connection>
-      <developerConnection>scm:svn:https://navigate.googlecode.com/svn/tags</developerConnection>
+      <connection>scm:svn:http://navigate.googlecode.com/svn/tags/navigate-0.2.4</connection>
+      <developerConnection>scm:svn:https://navigate.googlecode.com/svn/tags/navigate-0.2.4</developerConnection>
     </scm>
     <distributionManagement>
           <repository>
