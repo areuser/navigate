@@ -37,29 +37,34 @@ import java.util.*;/*
 public class Navigator {
     private static Log log = LogFactory.getLog(Navigator.class);
     private PropertyUtilsBean pub;
-    private ValueConvertor valueConvertor;
     private Property property;
-
+    private boolean ignore = true;
     public static Navigator getInstance(Property property) {
         return new Navigator(property);
     }
     public static Navigator getInstance() {
         return getInstance(new Property() {
-            public void indexed(Object bean, String name, int index, Object value){
+            public Object indexed(Object bean, String name, int index, Object value){
                 log.debug("indexed property "+name+" at "+index+" of bean "+bean+" will be set to "+value);
+                return value;
             }
-            public void mapped(Object bean, String name, Object key, Object value){
-                log.debug("mapped property "+name+" at "+key+" of bean "+bean+" will be set to "+value);                                
+            public Object mapped(Object bean, String name, Object key, Object value){
+                log.debug("mapped property "+name+" at "+key+" of bean "+bean+" will be set to "+value);
+                return value;
             }
-            public void simple(Object bean, String name, Object value){
+            public Object simple(Object bean, String name, Object value){
                 log.debug("simple property "+name+" of bean "+bean+" will be set to "+value);
+                return value;
             }
         });
+    }
+    public Navigator silent(boolean ignore) {
+        this.ignore = ignore;
+        return this;
     }
     private Navigator(Property property) {
         this.pub = new PropertyUtilsBean();
         this.pub.setResolver(new ResolverImpl());
-        this.valueConvertor = new ValueConvertor();
         this.property = property;       
     }
 
@@ -95,6 +100,7 @@ public class Navigator {
     }
 
     private Object aquireNestedPath(Object bean,String path) throws NoSuchMethodException, IntrospectionException,InstantiationException,IllegalAccessException,InvocationTargetException{
+        property.aquire(bean,path);
         Object nestedBean = bean;
         Resolver resolver = pub.getResolver();
          if ( !resolver.hasNested(path)) {
@@ -142,15 +148,15 @@ public class Navigator {
                         String prop = resolver.getProperty(path);
                         int idx = resolver.getIndex(path);
                         Object instance = createIndexedInstance(nestedBean,prop);
-                        property.indexed(nestedBean,prop,idx,instance);
-                        pub.setIndexedProperty(nestedBean,prop,idx,instance);
+                        instance = property.indexed(nestedBean,prop,idx,instance);
+                        pub.setIndexedProperty(nestedBean,prop,idx,instance);                        
                         object = pub.getProperty(bean,next);
                     } else {
                         // simple property
                        String prop = resolver.getProperty(path);
                        Object instance = createSimpleInstance(nestedBean,prop);
-                        property.simple(nestedBean,prop,instance);
-                        pub.setProperty(nestedBean,prop,instance);
+                        instance = property.simple(nestedBean,prop,instance);
+                        pub.setProperty(nestedBean,prop,instance);                       
                        object = pub.getProperty(bean,next);
                     }
                 }
@@ -168,6 +174,7 @@ public class Navigator {
         if(path == null)
             throw new IllegalArgumentException("No path specified for bean class '" + bean.getClass() + "'");
         //
+        property.set(bean,path,value);
         Object   drilldown = bean;
         String   subpath   = new String (path);
         Resolver resolver  = pub.getResolver();
@@ -184,18 +191,18 @@ public class Navigator {
         if(resolver.isMapped(subpath)) {
             // mapped property
             String key = resolver.getKey(subpath);
-            property.mapped(drilldown,prop,key,value);
+            value = property.mapped(drilldown,prop,key,value);
         } else if(resolver.isIndexed(subpath)) {
            // indexed property
             int idx = resolver.getIndex(subpath);
-            property.indexed(drilldown,prop,idx,value);
+            value = property.indexed(drilldown,prop,idx,value);
         } else {
             // simple property
-            property.simple(drilldown,subpath,value);
+            value = property.simple(drilldown,subpath,value);
         }
         //
         pub.setProperty(bean,path,value);
-    }    
+    }
 
     public void populate(Object dest, Map origPathValues) throws NoSuchMethodException, IntrospectionException,InstantiationException,IllegalAccessException,InvocationTargetException {
         Iterator itPathValues = origPathValues.entrySet().iterator();
@@ -204,16 +211,36 @@ public class Navigator {
             String path = (String)entry.getKey();
             Object value = entry.getValue();
             if ( value != null ) {
-              dest = aquireNestedPath(dest,path);
-              setProperty(dest,path,value);
+                try {
+                    dest = aquireNestedPath(dest,path);
+                    setProperty(dest,path,value);
+                } catch(Exception e) {
+                   if ( ignore ) {
+                       log.error("population of data for path "+path+" returned exception",e);
+                   } else {
+                        throw new IllegalStateException("extraction of data for path "+path+" returned exception",e);
+                   }
+
+                }
             }
         }
     }
-    public Map extract(Object bean, Set paths) throws NoSuchMethodException,IllegalAccessException,InvocationTargetException  {
+    public Map extract(Object bean, Set paths)  {
         Map extracted = new HashMap();
         for(Object path : paths) {
-            Object value = pub.getProperty(bean,(String)path);            
-            extracted.put(path, value);;
+            Object value = null;
+            try {
+                bean = aquireNestedPath(bean,(String)path);
+                value = pub.getProperty(bean,(String)path);                            
+            } catch(Exception e) {
+               if ( ignore ) {
+                   log.error("extraction of data for path "+path+" returned exception",e);
+               } else {
+                    throw new IllegalStateException("extraction of data for path "+path+" returned exception",e);   
+               }
+
+            }
+            extracted.put(path, value);
         }
         return extracted;
     }
