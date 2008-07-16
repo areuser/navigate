@@ -49,10 +49,33 @@ public class NavigatorTest {
         };
         Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
         Navigator.getInstance(new Property() {
-           public void simple(Object bean, String property, Object value) {
+           public Object simple(Object bean, String property, Object value) {
               Assert.assertEquals(property,"name");
               Assert.assertEquals(value,"deploy project");
               Assert.assertEquals(simple,bean);
+              return value;
+           }
+        }).populate(simple,propEntryMap);
+    }
+
+    @Test
+    public void date() throws Exception {
+        final Task simple = new Task();
+        simple.setParent(new Task());
+        Object[][] propEntries = new Object[][]{
+            {"parent/dueDate",""}
+        };
+        Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
+        Navigator.getInstance(new Property() {
+           public Object simple(Object bean, String property, Object value) {
+               try {
+                   PropertyUtilsBean prop = new PropertyUtilsBean();
+                   PropertyDescriptor desc = prop.getPropertyDescriptor(bean,property);
+                   boolean isDate = Date.class.isAssignableFrom(desc.getPropertyType());
+               } catch (Exception e) {
+                   e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+               }
+               return value;
            }
         }).populate(simple,propEntryMap);
     }

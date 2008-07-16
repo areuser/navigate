@@ -17,7 +17,9 @@ package nl.ucan.navigate;/*
  * since  : 0.2.4
   */
 public abstract class Property {
-    public void indexed(Object bean, String property, int index, Object value) {}
-    public void mapped(Object bean, String name, Object key, Object value) {}
-    public void simple(Object bean, String property, Object value) {}
+    public void aquire(Object bean,String path) {}
+    public void set(Object bean,String path,Object value) {}
+    public Object indexed(Object bean, String property, int index, Object value) { return value; }
+    public Object mapped(Object bean, String name, Object key, Object value) { return value; }
+    public Object simple(Object bean, String property, Object value) { return value; }
 }
