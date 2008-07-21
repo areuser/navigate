@@ -1,12 +1,10 @@
 package nl.ucan.navigate;
 
-import nl.ucan.navigate.convertor.ValueConvertor;
 
 import org.apache.commons.beanutils.ConstructorUtils;
 import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtilsBean;
 import org.apache.commons.beanutils.expression.Resolver;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -100,7 +98,7 @@ public class Navigator {
     }
 
     private Object aquireNestedPath(Object bean,String path) throws NoSuchMethodException, IntrospectionException,InstantiationException,IllegalAccessException,InvocationTargetException{
-        property.aquire(bean,path);
+        if ( !property.aquire(bean,path)) return bean; 
         Object nestedBean = bean;
         Resolver resolver = pub.getResolver();
          if ( !resolver.hasNested(path)) {
@@ -174,7 +172,7 @@ public class Navigator {
         if(path == null)
             throw new IllegalArgumentException("No path specified for bean class '" + bean.getClass() + "'");
         //
-        property.set(bean,path,value);
+        if (!property.set(bean,path,value)) return;
         Object   drilldown = bean;
         String   subpath   = new String (path);
         Resolver resolver  = pub.getResolver();
