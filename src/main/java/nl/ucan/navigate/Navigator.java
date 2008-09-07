@@ -229,7 +229,7 @@ public class Navigator {
             Object value = null;
             try {
                 bean = aquireNestedPath(bean,(String)path);
-                value = pub.getProperty(bean,(String)path);                            
+                value = pub.getProperty(bean,(String)path);
             } catch(Exception e) {
                if ( ignore ) {
                    log.error("extraction of data for path "+path+" returned exception",e);
