@@ -45,7 +45,7 @@ public class Task {
       private Resource  assigned;
       private Task   parent;
       private List<Task> subTask = new ArrayList();
-      private Map<String,String>  details = new HashMap<String,String>();
+      private Map  details = new HashMap();
 
     public Task(){}
     
@@ -55,11 +55,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    public Map<String,String> getDetails() {
+    public Map getDetails() {
         return details;
     }
 
-    public void setDetails(Map<String,String> details) {
+    public void setDetails(Map details) {
         this.details = details;
     }
 

@@ -19,17 +19,37 @@ import org.apache.commons.beanutils.expression.Resolver;/*
  * since  : 0.2.4
   */
 
-public class ResolverImpl implements Resolver {
-    private static final char NESTED        = '/';
-    private static final char MAPPED_START  = '(';
-    private static final char MAPPED_END    = ')';
-    private static final char INDEXED_START = '[';
-    private static final char INDEXED_END   = ']';
+class ResolverImpl implements Resolver {
+    private static char NESTED        = '/';
+    private static char MAPPED_START  = '(';
+    private static char MAPPED_END    = ')';
+    private static char INDEXED_START = '[';
+    private static char INDEXED_END   = ']';
 
     /**
      * Default Constructor.
      */
-    public ResolverImpl() {
+    public static void setNested(char NESTED) {
+        ResolverImpl.NESTED = NESTED;
+    }
+    public static char getNested() {
+        return ResolverImpl.NESTED;
+    }
+
+    public static void setMappedStart(char mappedStart) {
+        ResolverImpl.MAPPED_START = mappedStart;
+    }
+
+    public static void setMappedEnd(char mappedEnd) {
+        ResolverImpl.MAPPED_END = mappedEnd;
+    }
+
+    public static void setIndexedStart(char indexedStart) {
+        ResolverImpl.INDEXED_START = indexedStart;
+    }
+
+    public static void setIndexedEnd(char IndexedEnd) {
+        ResolverImpl.INDEXED_END = IndexedEnd;
     }
 
     /**

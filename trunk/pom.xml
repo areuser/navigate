@@ -141,21 +141,6 @@
 		</repository>
     </repositories>
   <dependencies>
-    <dependency>
-        <groupId>commons-jxpath</groupId>
-        <artifactId>commons-jxpath</artifactId>
-        <version>1.2</version>
-        <exclusions>
-          <exclusion>
-            <groupId>ant</groupId>
-            <artifactId>ant-optional</artifactId>
-          </exclusion>
-            <exclusion>
-              <artifactId>servlet-api</artifactId>
-              <groupId>javax.servlet</groupId>
-            </exclusion>
-        </exclusions>
-     </dependency>
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>

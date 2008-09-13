@@ -15,67 +15,15 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library" exported="">
-      <library name="commons-jxpath:commons-jxpath:1.2">
+      <library name="commons-lang:commons-lang:2.3">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-jxpath/commons-jxpath/1.2/commons-jxpath-1.2-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="xerces:xerces:1.2.3">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xerces/xerces/1.2.3/xerces-1.2.3.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xerces/xerces/1.2.3/xerces-1.2.3-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xerces/xerces/1.2.3/xerces-1.2.3-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="junit:junit:4.4">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="xml-apis:xml-apis:1.0.b2">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="jdom:jdom:b9">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/jdom/jdom/b9/jdom-b9.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/jdom/jdom/b9/jdom-b9-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/jdom/jdom/b9/jdom-b9-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -93,15 +41,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library" exported="">
-      <library name="commons-logging:commons-logging:1.0">
+      <library name="commons-logging:commons-logging:1.0.4">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0/commons-logging-1.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0/commons-logging-1.0-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0/commons-logging-1.0-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -118,16 +66,16 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="commons-lang:commons-lang:2.3">
+    <orderEntry type="module-library">
+      <library name="junit:junit:4.4">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-javadoc.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-lang/commons-lang/2.3/commons-lang-2.3-sources.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
