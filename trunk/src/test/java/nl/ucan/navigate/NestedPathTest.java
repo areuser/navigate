@@ -6,7 +6,6 @@ import nl.ucan.navigate.util.Resource;
 import java.util.*;
 
 import junit.framework.Assert;
-import org.apache.commons.collections.MapUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
@@ -37,10 +36,8 @@ public class NestedPathTest {
     public void simple() throws Exception {
         final Task simple = new Task();
         simple.setParent(new Task());
-        Object[][] propEntries = new Object[][]{
-            {"parent/name","deploy project"}
-        };
-        Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
+        Map propEntryMap = new HashMap();
+        propEntryMap.put("parent/name","deploy project");        
         NestedPath.getInstance(new PropertyInstance() {
            public Object simple(Object bean, String property, Object value) {
               Assert.assertEquals(property,"name");
@@ -55,14 +52,12 @@ public class NestedPathTest {
     @Test
     public void example() throws Exception {
         Task simple = new Task();
-        Object[][] propEntries = new Object[][]{
-            {"name","deploy project"}
-            ,{"subTask[0]/name","write article"}
-            ,{"subTask[0]/assigned/role","volunteer"}
-            ,{"details(project)","beannav"}
-            ,{"assigned/role","founder"}
-        };
-        Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
+        Map propEntryMap = new HashMap();
+        propEntryMap.put("name","deploy project");
+        propEntryMap.put("subTask[0]/name","write article");
+        propEntryMap.put("subTask[0]/assigned/role","volunteer");
+        propEntryMap.put("details(project)","beannav");
+        propEntryMap.put("assigned/role","founder");
         NestedPath.getInstance().populate(simple,propEntryMap);
         Task complex = new Task();
         complex.setName("deploy project");
@@ -105,17 +100,16 @@ public class NestedPathTest {
 
     @Test
     public void populate() throws Exception {
-        Object[][] xpathPopEntries = new Object[][]{
-                {"name","promote xbean"}
-                ,{"completion",0.01F}
-                ,{"assigned/role","founder"}
-                ,{"subTask[0]/name","roadshow"}
-                ,{"subTask[0]/assigned/role","marketing"}
-                ,{"details(license)","Apache License"}
-        };
-        Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
+        Map propEntryMap = new HashMap();
+        propEntryMap.put("name","promote xbean");
+        propEntryMap.put("completion",0.01F);
+        propEntryMap.put("assigned/role","founder");
+        propEntryMap.put("subTask[0]/name","roadshow");
+        propEntryMap.put("subTask[0]/assigned/role","marketing");
+        propEntryMap.put("details(license)","Apache License");
+
         Task task = new Task();
-        NestedPath.getInstance().populate(task,xpathEntryMap);
+        NestedPath.getInstance().populate(task,propEntryMap);
         Assert.assertEquals(task.getName(),"promote xbean");
         Assert.assertEquals(task.getCompletion(),0.01F);
         Assert.assertEquals(task.getAssigned().getRole(),"founder");
@@ -123,11 +117,9 @@ public class NestedPathTest {
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"marketing");
         Assert.assertEquals(task.getDetails().get("license"),"Apache License");
         //
-        xpathPopEntries = new Object[][]{
-                {"subTask[0]/assigned/role","founder"}
-        };
-        xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
-        NestedPath.getInstance().populate(task,xpathEntryMap);
+        propEntryMap = new HashMap();
+        propEntryMap.put("subTask[0]/assigned/role","founder");
+        NestedPath.getInstance().populate(task,propEntryMap);
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder");
     }
 
