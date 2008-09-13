@@ -1,24 +1,17 @@
 package nl.ucan.navigate;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.apache.commons.beanutils.*;
-import org.apache.commons.beanutils.expression.Resolver;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.commons.collections.MapUtils;
-
-import java.beans.PropertyDescriptor;
-import java.beans.IntrospectionException;
-import java.lang.reflect.Array;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-
 import nl.ucan.navigate.util.Task;
 import nl.ucan.navigate.util.Resource;
-import junit.framework.Assert;/*
+
+import java.util.*;
+
+import junit.framework.Assert;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.junit.Test;
+
+/*
  * Copyright 2007-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -37,8 +30,8 @@ import junit.framework.Assert;/*
  * since  : 0.1
   */
 
-public class NavigatorTest {
-    private static Log log = LogFactory.getLog(NavigatorTest.class);
+public class NestedPathTest {
+    private static Log log = LogFactory.getLog(NestedPathTest.class);
 
     @Test
     public void simple() throws Exception {
@@ -48,7 +41,7 @@ public class NavigatorTest {
             {"parent/name","deploy project"}
         };
         Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
-        Navigator.getInstance(new Property() {
+        NestedPath.getInstance(new PropertyInstance() {
            public Object simple(Object bean, String property, Object value) {
               Assert.assertEquals(property,"name");
               Assert.assertEquals(value,"deploy project");
@@ -58,27 +51,6 @@ public class NavigatorTest {
         }).populate(simple,propEntryMap);
     }
 
-    @Test
-    public void date() throws Exception {
-        final Task simple = new Task();
-        simple.setParent(new Task());
-        Object[][] propEntries = new Object[][]{
-            {"parent/dueDate",""}
-        };
-        Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
-        Navigator.getInstance(new Property() {
-           public Object simple(Object bean, String property, Object value) {
-               try {
-                   PropertyUtilsBean prop = new PropertyUtilsBean();
-                   PropertyDescriptor desc = prop.getPropertyDescriptor(bean,property);
-                   boolean isDate = Date.class.isAssignableFrom(desc.getPropertyType());
-               } catch (Exception e) {
-                   e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-               }
-               return value;
-           }
-        }).populate(simple,propEntryMap);
-    }
 
     @Test
     public void example() throws Exception {
@@ -91,7 +63,7 @@ public class NavigatorTest {
             ,{"assigned/role","founder"}
         };
         Map propEntryMap =  MapUtils.putAll(new HashMap(), propEntries);
-        Navigator.getInstance().populate(simple,propEntryMap);
+        NestedPath.getInstance().populate(simple,propEntryMap);
         Task complex = new Task();
         complex.setName("deploy project");
         List<Task> subTasks = complex.getSubTask();
@@ -121,7 +93,7 @@ public class NavigatorTest {
                 ,"assigned/role"
         };
         Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathExtEntries));
-        Map extract = Navigator.getInstance().extract(simple,xpathEntrySet);
+        Map extract = NestedPath.getInstance().extract(simple,xpathEntrySet);
 
         Assert.assertEquals(extract.get("name"),complex.getName());
         Assert.assertEquals(extract.get("subTask[0]/name"),complex.getSubTask().get(0).getName());
@@ -143,7 +115,7 @@ public class NavigatorTest {
         };
         Map xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
         Task task = new Task();
-        Navigator.getInstance().populate(task,xpathEntryMap);
+        NestedPath.getInstance().populate(task,xpathEntryMap);
         Assert.assertEquals(task.getName(),"promote xbean");
         Assert.assertEquals(task.getCompletion(),0.01F);
         Assert.assertEquals(task.getAssigned().getRole(),"founder");
@@ -155,7 +127,7 @@ public class NavigatorTest {
                 {"subTask[0]/assigned/role","founder"}
         };
         xpathEntryMap =  MapUtils.putAll(new HashMap(), xpathPopEntries);
-        Navigator.getInstance().populate(task,xpathEntryMap);
+        NestedPath.getInstance().populate(task,xpathEntryMap);
         Assert.assertEquals(task.getSubTask().get(0).getAssigned().getRole(),"founder");
     }
 
@@ -185,7 +157,7 @@ public class NavigatorTest {
                 ,"details(license)"
         };
         Set<String> xpathEntrySet = new HashSet(Arrays.asList(xpathExtEntries));
-        Map extract = Navigator.getInstance().extract(task,xpathEntrySet);
+        Map extract = NestedPath.getInstance().extract(task,xpathEntrySet);
 
 
         Assert.assertEquals(extract.get("name"),"promote xbean");
