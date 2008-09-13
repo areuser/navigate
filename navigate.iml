@@ -53,19 +53,6 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="commons-collections:commons-collections:3.2">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-collections/commons-collections/3.2/commons-collections-3.2.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-collections/commons-collections/3.2/commons-collections-3.2-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-collections/commons-collections/3.2/commons-collections-3.2-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library name="junit:junit:4.4">
         <CLASSES>

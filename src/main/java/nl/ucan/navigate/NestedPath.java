@@ -104,29 +104,6 @@ public class NestedPath {
         this.propertyValue = propertyValue;
     }
 
-//    public static void main(String[] s) {
-//        try {
-//            Task task = new Task();
-//            Map values = new HashMap();
-//            task.setName("test");
-//            Task subTask = new Task();
-//            subTask.setName("let's see");
-//            task.getSubTask().add(subTask);
-//            Task parent = new Task();
-//            parent.setName("let's see");
-//            task.setParent(parent);
-//            values.put("subTask[2]/name","write article");
-//            values.put("subTask[2]/details(when)","saturday");
-//            values.put("subTask[12]/parent/assigned/name","saturday");
-//            values.put("parent/details(where)","athome");
-//            NestedPath.getInstance().populate(task,values);
-//            int j = 2;
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
     private NestedPath(PropertyValue propertyValue) {
         if ( propertyValue == null ) {
             propertyValue = new PropertyValue() {
