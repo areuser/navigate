@@ -4,12 +4,12 @@ import org.apache.commons.beanutils.*;
 import org.apache.commons.beanutils.expression.Resolver;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.*;
 import java.beans.PropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.util.*;
-
 
 /*
  * Copyright 2007-2008 the original author or authors.
@@ -28,7 +28,8 @@ import java.util.*;
  *
  * author : Arnold Reuser
  * since  : 0.2.5
-  */
+ */
+
 
 public class NestedPath {
     private static Log log = LogFactory.getLog(NestedPath.class);
@@ -103,43 +104,20 @@ public class NestedPath {
         this.propertyInstance = propertyInstance;
         this.propertyValue = propertyValue;
     }
-
-    private NestedPath(PropertyValue propertyValue) {
-        if ( propertyValue == null ) {
-            propertyValue = new PropertyValue() {
-                public Object indexed(Object bean, String property, int index, Object value){
-                    log.info("value of indexed property "+property+" at "+index+" of bean "+bean+" will be set to "+value);
-                    return value;
-                }
-                public Object mapped(Object bean, String property, Object key, Object value){
-                    log.info("value of mapped property "+property+" at "+key+" of bean "+bean+" will be set to "+value);
-                    return value;
-                }
-                public Object simple(Object bean, String property, Object value){
-                    log.info("value of simple property "+property+" of bean "+bean+" will be set to "+value);
-                    return value;
-                }
-            };
-        }
-        this.pub = BeanUtilsBean.getInstance().getPropertyUtils();
-        this.pub.setResolver(new ResolverImpl());
-        this.propertyValue = propertyValue;
-    }
-
     public void populate(Object bean, Map<String,Object> pathValues) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException,IntrospectionException {
         Iterator<Map.Entry<String,Object>> itPathValues = pathValues.entrySet().iterator();
         while(itPathValues.hasNext()) {
             Map.Entry<String,Object> entry = (Map.Entry)itPathValues.next();
             String path = entry.getKey();
             Object value = entry.getValue();
-            bean = acquireBean(bean,path);
+            bean = acquireProperty(bean,path);
             setProperty(bean,path,value);
         }
     }
     public Map extract(Object bean, Set<String> paths) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException,IntrospectionException  {
         Map extracted = new HashMap();
         for(String path : paths) {
-            bean = acquireBean(bean,path);
+            bean = acquireProperty(bean,path);
             Object value = pub.getProperty(bean,path);
             extracted.put(path, value);
         }
@@ -175,7 +153,9 @@ public class NestedPath {
         pub.setProperty(bean,path,value);
     }
 
-    private Object acquireBean(Object bean, String path) throws IllegalAccessException,InvocationTargetException,InstantiationException,IntrospectionException,NoSuchMethodException {
+
+
+    private Object acquireProperty(Object bean, String path) throws IllegalAccessException,InvocationTargetException,InstantiationException,IntrospectionException,NoSuchMethodException {
         Object instance = bean;
         pub.copyProperties(instance,bean);
         DynaBean dynaBean = getDynaBean(instance);
@@ -183,26 +163,34 @@ public class NestedPath {
         String masterPath = "" ;
         for(; resolver.hasNested(path); path = resolver.remove(path))
         {
-            masterPath += resolver.next(path);
             String prop = resolver.getProperty(path);
             if ( resolver.isIndexed(path) ) {
                 int idx = resolver.getIndex(path);
-                Object tmp = pub.getIndexedProperty(dynaBean,prop,idx);
+                Object tmp = pub.getIndexedProperty(dynaBean,prop,idx);  
                 if ( tmp == null ) {
                     instance = createIndexedInstance(instance.getClass(),prop);
-                    pub.setIndexedProperty(dynaBean,prop,idx,instance);
+                    Object nestedBean = (StringUtils.isBlank(masterPath) ? bean : pub.getProperty(bean,masterPath));
+                    instance = propertyInstance.indexed(nestedBean,prop,idx,instance);                    
+                    masterPath = (StringUtils.isBlank(masterPath) ? resolver.next(path) : masterPath+ResolverImpl.getNested()+resolver.next(path) );
                     pub.setProperty(bean,masterPath,instance);
                 }
-                else instance = tmp;
+                else {
+                    masterPath = (StringUtils.isBlank(masterPath) ? resolver.next(path) : masterPath+ResolverImpl.getNested()+resolver.next(path) );
+                    instance = tmp;
+                }
             }  else {
                 instance = pub.getProperty(instance,prop);
                 if ( instance == null ) {
                     instance = pub.getProperty(dynaBean,prop);
+                    Object nestedBean = (StringUtils.isBlank(masterPath) ? bean : pub.getProperty(bean,masterPath));
+                    instance = propertyInstance.simple(nestedBean,prop,instance);
+                    masterPath = (StringUtils.isBlank(masterPath) ? resolver.next(path) : masterPath+ResolverImpl.getNested()+resolver.next(path) );
                     pub.setProperty(bean,masterPath,instance);
+                } else {
+                   masterPath = (StringUtils.isBlank(masterPath) ? resolver.next(path) : masterPath+ResolverImpl.getNested()+resolver.next(path) );
                 }
             }
             dynaBean = getDynaBean(instance);
-            masterPath += ResolverImpl.getNested();
          }
         return bean;
     }

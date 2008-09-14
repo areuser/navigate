@@ -63,6 +63,7 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-sources.jar!/" />
+          <root url="intellijad://intellijad" />
         </SOURCES>
       </library>
     </orderEntry>

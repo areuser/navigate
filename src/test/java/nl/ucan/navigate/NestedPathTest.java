@@ -8,6 +8,7 @@ import java.util.*;
 import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Test;
 
 /*
@@ -32,12 +33,14 @@ import org.junit.Test;
 public class NestedPathTest {
     private static Log log = LogFactory.getLog(NestedPathTest.class);
 
+
+
     @Test
     public void simple() throws Exception {
         final Task simple = new Task();
         simple.setParent(new Task());
         Map propEntryMap = new HashMap();
-        propEntryMap.put("parent/name","deploy project");        
+        propEntryMap.put("parent/name","deploy project");
         NestedPath.getInstance(new PropertyInstance() {
            public Object simple(Object bean, String property, Object value) {
               Assert.assertEquals(property,"name");
