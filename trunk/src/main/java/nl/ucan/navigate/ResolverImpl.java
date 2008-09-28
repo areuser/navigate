@@ -21,7 +21,7 @@ import org.apache.commons.beanutils.expression.Resolver;
  */
 
 class ResolverImpl implements Resolver {
-    private static char NESTED        = '/';
+    private static char NESTED        = '.';
     private static char MAPPED_START  = '(';
     private static char MAPPED_END    = ')';
     private static char INDEXED_START = '[';
@@ -29,7 +29,7 @@ class ResolverImpl implements Resolver {
 
     /**
      * Default Constructor.
-     */
+     */                                  
     public static void setNested(char NESTED) {
         ResolverImpl.NESTED = NESTED;
     }
@@ -40,18 +40,32 @@ class ResolverImpl implements Resolver {
     public static void setMappedStart(char mappedStart) {
         ResolverImpl.MAPPED_START = mappedStart;
     }
+    public static char getMappedStart() {
+        return ResolverImpl.MAPPED_START;
+    }
 
     public static void setMappedEnd(char mappedEnd) {
         ResolverImpl.MAPPED_END = mappedEnd;
+    }
+    public static char getMappedEnd() {
+        return ResolverImpl.MAPPED_END;
     }
 
     public static void setIndexedStart(char indexedStart) {
         ResolverImpl.INDEXED_START = indexedStart;
     }
-
+    public static char getIndexedStart() {
+        return ResolverImpl.INDEXED_START;
+    }
     public static void setIndexedEnd(char IndexedEnd) {
         ResolverImpl.INDEXED_END = IndexedEnd;
     }
+    public static char getIndexedEnd() {
+        return ResolverImpl.INDEXED_END;
+    }
+
+
+
 
     /**
      * Return the index value from the property expression or -1.
