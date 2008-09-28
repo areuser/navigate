@@ -10,10 +10,24 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/surefire-reports" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library" exported="">
+      <library name="commons-logging:commons-logging:1.1.1">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
     <orderEntry type="module-library" exported="">
       <library name="commons-lang:commons-lang:2.3">
         <CLASSES>
@@ -40,19 +54,6 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library name="commons-logging:commons-logging:1.0.4">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/commons-logging/commons-logging/1.0.4/commons-logging-1.0.4-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
     <orderEntry type="module-library">
       <library name="junit:junit:4.4">
         <CLASSES>
@@ -63,7 +64,6 @@
         </JAVADOC>
         <SOURCES>
           <root url="jar://$MODULE_DIR$/../../../Documents and Settings/Administrator/.m2/repository/junit/junit/4.4/junit-4.4-sources.jar!/" />
-          <root url="intellijad://intellijad" />
         </SOURCES>
       </library>
     </orderEntry>

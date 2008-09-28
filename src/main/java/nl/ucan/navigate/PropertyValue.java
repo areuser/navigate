@@ -21,5 +21,5 @@ package nl.ucan.navigate;
 public class PropertyValue {
     public Object indexed(Object bean, String property, int index, Object value) { return value; }
     public Object mapped(Object bean, String property, Object key, Object value) { return value; }
-    public Object simple(Object bean, String property, Object value) { return value; }    
+    public Object simple(Object bean, String property, Object value) { return value; }
 }

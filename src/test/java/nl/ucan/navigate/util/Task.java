@@ -25,6 +25,16 @@ public class Task {
         return id;
     }
 
+    public static void main(String[] s) {
+        try {
+            List<Task> tasks = new ArrayList<Task>();
+            tasks.add(12,new Task());
+        } catch (Exception e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
