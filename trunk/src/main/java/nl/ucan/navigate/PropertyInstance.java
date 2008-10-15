@@ -19,6 +19,5 @@ package nl.ucan.navigate;
   */
 public abstract class PropertyInstance {
     public Object indexed(Object bean, String property, int index, Object value) { return value; }
-    public Object indexed(Object bean, String property, Object value) { return value; }    
     public Object simple(Object bean, String property, Object value) { return value; }
 }
