@@ -3,7 +3,7 @@
  <groupId>nl.ucan</groupId>
  <artifactId>navigate</artifactId>
  <packaging>jar</packaging>
- <version>0.2.5</version>
+ <version>0.2.5-SNAPSHOT</version>
  <name>navigate</name>
   <url>http://code.google.com/p/navigate/</url>
   <description>populate, extract and create beans on the fly by using xpath expressions</description>
@@ -26,8 +26,8 @@
       </developer>
   </developers>
     <scm>
-      <connection>scm:svn:http://navigate.googlecode.com/svn/tags/navigate-0.2.5</connection>
-      <developerConnection>scm:svn:https://navigate.googlecode.com/svn/tags/navigate-0.2.5</developerConnection>
+      <connection>scm:svn:http://navigate.googlecode.com/svn/tags/navigate</connection>
+      <developerConnection>scm:svn:https://navigate.googlecode.com/svn/tags/navigate</developerConnection>
     </scm>
     <distributionManagement>
           <repository>
@@ -145,16 +145,16 @@
         <groupId>commons-logging</groupId>
         <artifactId>commons-logging</artifactId>
         <version>1.1.1</version>
-    </dependency>       
+    </dependency>
       <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
         <version>2.3</version>
       </dependency>
       <dependency>
-        <groupId>commons-lang</groupId>
-        <artifactId>commons-lang</artifactId>
-        <version>2.3</version>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2</version>
       </dependency>
       <dependency>
         <groupId>commons-beanutils</groupId>
