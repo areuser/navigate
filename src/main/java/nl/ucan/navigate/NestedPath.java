@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 import java.lang.reflect.*;
 import java.beans.PropertyDescriptor;
@@ -30,8 +31,6 @@ import java.util.*;
  * author : Arnold Reuser
  * since  : 0.2.5
  */
-
-
 public class NestedPath {
     private static Log log = LogFactory.getLog(NestedPath.class);
     private PropertyUtilsBean pub;
@@ -105,11 +104,25 @@ public class NestedPath {
             }
         };
         this.indexPointer = new IndexPointer() {
-            public int firstIndexOf(List beans,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException {
+            public void add(Object bean,Object instance) {
+                if (bean instanceof Collection) {
+                    ((Collection) bean).add(instance);
+                } 
+            }
+            public int size(Object bean) {
+                return CollectionUtils.size(bean);
+            }
+            public Object get(Object bean,int idx) {
+               return CollectionUtils.get(bean,idx);
+            }
+
+            public int firstIndexOf(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException {
                 this.setUndeterminedIndex(undeterminedIndex);
-                for(int idx = 0; idx < beans.size() ; idx++) {
-                    Object bean = beans.get(idx);
-                    if (evaluate(bean,this.getUndeterminedIndex()) ) return idx;
+                for(int idx = 0; idx < size(bean) ; idx++) {
+                    Object object = get(bean,idx);
+                    if (object != null ) {
+                        if (evaluate(object,this.getUndeterminedIndex()) ) return idx;
+                    }
                 }
                 return -1;
             }
@@ -147,7 +160,7 @@ public class NestedPath {
                 keyValuePair.put(StringUtils.substringBefore(value,SEP)
                                 ,StringUtils.substringAfter(value,SEP));
                 return keyValuePair.entrySet().iterator().next();
-            }            
+            }
         };
         this.pub = BeanUtilsBean.getInstance().getPropertyUtils();
         this.pub.setResolver(new ResolverImpl());
@@ -198,19 +211,6 @@ public class NestedPath {
             pub.setProperty(lastPathInstance,lastPathElement,value);
         }
     }
-                                                         
-    public static void main(String[] s) {
-        Resolver resolver = new ResolverImpl();
-        String path = "parent[12].name(hans).piet";
-        for(; StringUtils.isNotBlank(path); path = resolver.remove(path))
-        {
-            System.out.println("path="+path);
-            System.out.println("prop="+resolver.getProperty(path));
-            System.out.println("next="+resolver.next(path));
-            System.out.println("------");
-        }
-
-    }
 
     public PathContext acquirePathContext(Object bean, String path) throws IllegalAccessException,InvocationTargetException,InstantiationException,IntrospectionException,NoSuchMethodException {
         PathContext pathContext = new PathContext(ResolverImpl.getNested());
@@ -224,23 +224,23 @@ public class NestedPath {
             if ( resolver.isIndexed(path) ) {
                 String undeterminedIdx = getUndeterminedIndex(path);
                 int positionalIdx = getPositionalIndex(undeterminedIdx);
-                if ( positionalIdx == -1 ) {
-                    List list = (List)pub.getProperty(dynaBean,prop);
-                    int idx = indexPointer.firstIndexOf(list,undeterminedIdx);
+                if ( positionalIdx == -1 ) {                    
+                    Object object = pub.getProperty(dynaBean,prop);
+                    int idx = indexPointer.firstIndexOf(object,undeterminedIdx);
                     if ( idx == -1 ) {
                         Object nestedBean = ( pathContext.noPathSpecified() ? bean : pub.getProperty(bean,pathContext.toString()));
                         instance = createInstance(instance.getClass(),prop);
-                        instance = propertyInstance.indexed(nestedBean,prop,instance);
-                        list.add(instance);
-                        indexPointer.setIndex(instance,undeterminedIdx);
-                        pub.setProperty(bean,( StringUtils.isBlank(pathContext.toString()) ? prop : pathContext.toString()+ResolverImpl.getNested()+prop ),list);
-                        String replace = namedToPositioned(resolver.next(path),list.size()-1);
+                        instance = propertyInstance.indexed(nestedBean,prop,indexPointer.size(object),instance);
+                        indexPointer.add(object,instance);  // potentially resize collection when instance is added
+                        indexPointer.setIndex(instance,undeterminedIdx); // named idx itself is a property
+                        pub.setProperty(bean,( StringUtils.isBlank(pathContext.toString()) ? prop : pathContext.toString()+ResolverImpl.getNested()+prop ),object);
+                        String replace = namedToPositioned(resolver.next(path),indexPointer.size(object)-1);
                         pathContext.addPart(replace);
                     }
                     else {
                         String replace = namedToPositioned(resolver.next(path),idx);
                         pathContext.addPart(replace);
-                        instance = list.get(idx);
+                        instance = indexPointer.get(object,idx);
                     }                    
 
                 }  else {

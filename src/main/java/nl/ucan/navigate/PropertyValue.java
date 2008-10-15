@@ -18,7 +18,7 @@ package nl.ucan.navigate;
  * author : Arnold Reuser
  * since  : 0.2.4
   */
-public class PropertyValue {
+public abstract class PropertyValue {
     public Object indexed(Object bean, String property, int index, Object value) { return value; }
     public Object mapped(Object bean, String property, Object key, Object value) { return value; }
     public Object simple(Object bean, String property, Object value) { return value; }
