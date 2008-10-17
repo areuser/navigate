@@ -1,6 +1,11 @@
 package nl.ucan.navigate.util;
 
-import java.util.*;/*
+import java.util.*;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;/*
  * Copyright 2007-2008 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,16 +30,6 @@ public class Task {
         return id;
     }
 
-    public static void main(String[] s) {
-        try {
-            List<Task> tasks = new ArrayList<Task>();
-            tasks.add(12,new Task());
-        } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,8 +42,9 @@ public class Task {
         this.version = version;
     }
 
-    private Long version;
+      private Long version;
       private String name;
+      private String[]  classification = new String[]{};
       private Date   startDate;
       private Date   dueDate;
       private Float  completion;
@@ -56,6 +52,8 @@ public class Task {
       private Task   parent;
       private List<Task> subTask = new ArrayList();
       private Map  details = new HashMap();
+
+
 
     public Task(){}
     
@@ -127,6 +125,14 @@ public class Task {
 
     public void setSubTask(List<Task> subTask) {
         this.subTask = subTask;
+    }
+
+    public String[] getClassification() {
+        return classification;
+    }
+
+    public void setClassification(String[] classification) {
+        this.classification = classification;
     }
 
     public boolean equals(Object o) {

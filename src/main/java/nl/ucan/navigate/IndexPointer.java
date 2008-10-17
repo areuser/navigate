@@ -24,8 +24,7 @@ import java.beans.IntrospectionException;
 */
 public abstract class IndexPointer {
     public abstract int firstIndexOf(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException;
-    public abstract void setIndex(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException;
-    public abstract void add(Object bean,Object instance);
+    public abstract void setIndexAsProperty(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException;
     public abstract int size(Object bean);
     public abstract Object get(Object bean,int idx);
 }

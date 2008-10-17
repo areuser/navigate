@@ -5,7 +5,11 @@ import nl.ucan.navigate.util.Resource;
 
 import java.util.*;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.ParameterizedType;
 import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 
 import junit.framework.Assert;
 import org.apache.commons.logging.Log;
@@ -40,7 +44,6 @@ import org.junit.Test;
 public class NestedPathTest {
     private static Log log = LogFactory.getLog(NestedPathTest.class);
 
-
     @Test
     public void simple() throws Exception {
         final Task simple = new Task();
@@ -64,8 +67,11 @@ public class NestedPathTest {
         nestedPath.populate(simple,"name","deploy project");
         nestedPath.populate(simple,"subTask[0].name","write article");
         nestedPath.populate(simple,"subTask[0].assigned.role","volunteer");
+        nestedPath.populate(simple,"subTask[1]",null);
         nestedPath.populate(simple,"details(project)","beannav");
         nestedPath.populate(simple,"assigned.role","founder");
+        nestedPath.populate(simple,"classification[1]","oss");
+        nestedPath.populate(simple,"classification[0]","java");
 
         Task complex = new Task();
         complex.setName("deploy project");
@@ -81,6 +87,8 @@ public class NestedPathTest {
         Resource founder = new Resource();
         founder.setRole("founder");
         complex.setAssigned(founder);
+        complex.setClassification(new String[]{"java","oss"});
+
 
         Assert.assertEquals(simple.getName(),complex.getName());
         Assert.assertEquals(simple.getSubTask().get(0).getName(),complex.getSubTask().get(0).getName());
@@ -92,6 +100,8 @@ public class NestedPathTest {
         Assert.assertEquals(nestedPath.extract(simple,"subTask[0].assigned.role"),complex.getSubTask().get(0).getAssigned().getRole());
         Assert.assertEquals(nestedPath.extract(simple,"details(project)"),complex.getDetails().get("project"));
         Assert.assertEquals(nestedPath.extract(simple,"assigned.role"),complex.getAssigned().getRole());
+        Assert.assertEquals(nestedPath.extract(simple,"classification[0]"),complex.getClassification()[0]);
+        Assert.assertEquals(nestedPath.extract(simple,"classification[1]"),complex.getClassification()[1]);
     }
 
 
@@ -142,7 +152,6 @@ public class NestedPathTest {
         Assert.assertEquals(nestedPath.extract(task,"subTask[name=roadshow].assigned.role"),"marketing");
         Assert.assertEquals(nestedPath.extract(task,"details(license)"),"Apache License");
     }
-
 
 }
 
