@@ -6,7 +6,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.ClassUtils;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.core.GenericCollectionTypeResolver;
+import org.springframework.core.GenericTypeResolver;
 
 import java.lang.reflect.*;
 import java.beans.PropertyDescriptor;
@@ -104,11 +108,6 @@ public class NestedPath {
             }
         };
         this.indexPointer = new IndexPointer() {
-            public void add(Object bean,Object instance) {
-                if (bean instanceof Collection) {
-                    ((Collection) bean).add(instance);
-                } 
-            }
             public int size(Object bean) {
                 return CollectionUtils.size(bean);
             }
@@ -126,7 +125,7 @@ public class NestedPath {
                 }
                 return -1;
             }
-            public void setIndex(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException {
+            public void setIndexAsProperty(Object bean,String undeterminedIndex) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException,InstantiationException, IntrospectionException {
                 this.setUndeterminedIndex(undeterminedIndex);
                 Object value = propertyValue.simple(bean,this.getProperty(),this.getValue());
                 pub.setProperty(bean,this.getProperty(),value);
@@ -215,8 +214,8 @@ public class NestedPath {
     public PathContext acquirePathContext(Object bean, String path) throws IllegalAccessException,InvocationTargetException,InstantiationException,IntrospectionException,NoSuchMethodException {
         PathContext pathContext = new PathContext(ResolverImpl.getNested());
         Object instance = bean;
-        pub.copyProperties(instance,bean);
         DynaBean dynaBean = getDynaBean(instance);
+        pub.copyProperties(instance,bean);
         Resolver resolver = pub.getResolver();
         for(; StringUtils.isNotBlank(path); path = resolver.remove(path))
         {
@@ -224,17 +223,17 @@ public class NestedPath {
             if ( resolver.isIndexed(path) ) {
                 String undeterminedIdx = getUndeterminedIndex(path);
                 int positionalIdx = getPositionalIndex(undeterminedIdx);
-                if ( positionalIdx == -1 ) {                    
+                if ( positionalIdx == -1 ) {
                     Object object = pub.getProperty(dynaBean,prop);
                     int idx = indexPointer.firstIndexOf(object,undeterminedIdx);
                     if ( idx == -1 ) {
-                        Object nestedBean = ( pathContext.noPathSpecified() ? bean : pub.getProperty(bean,pathContext.toString()));
-                        instance = createInstance(instance.getClass(),prop);
+                        Object nestedBean = ( pathContext.noPathSpecified() ? bean : pub.getProperty(bean,pathContext.toString())); 
+                        instance = createInstanceOfCollection(instance.getClass(),prop);
+                        indexPointer.setIndexAsProperty(instance,undeterminedIdx);
                         instance = propertyInstance.indexed(nestedBean,prop,indexPointer.size(object),instance);
-                        indexPointer.add(object,instance);  // potentially resize collection when instance is added
-                        indexPointer.setIndex(instance,undeterminedIdx); // named idx itself is a property
+                        String replace = namedToPositioned(resolver.next(path),indexPointer.size(object));
+                        pub.setIndexedProperty(dynaBean,replace,instance); // create object at required position
                         pub.setProperty(bean,( StringUtils.isBlank(pathContext.toString()) ? prop : pathContext.toString()+ResolverImpl.getNested()+prop ),object);
-                        String replace = namedToPositioned(resolver.next(path),indexPointer.size(object)-1);
                         pathContext.addPart(replace);
                     }
                     else {
@@ -242,12 +241,12 @@ public class NestedPath {
                         pathContext.addPart(replace);
                         instance = indexPointer.get(object,idx);
                     }                    
-
                 }  else {
-                    Object tmp = pub.getIndexedProperty(dynaBean,prop,positionalIdx);
+                    Object tmp = pub.getIndexedProperty(dynaBean,prop,positionalIdx); // create object at required position
                     if ( tmp == null ) {
                         Object nestedBean = ( pathContext.noPathSpecified() ? bean : pub.getProperty(bean,pathContext.toString()));
-                        instance = createInstance(instance.getClass(),prop);
+                        growCollection(instance,prop,positionalIdx);
+                        instance = createInstanceOfCollection(instance.getClass(),prop);
                         instance = propertyInstance.indexed(nestedBean,prop,positionalIdx,instance);
                         pathContext.addPart(resolver.next(path));
                         pub.setProperty(bean,pathContext.toString(),instance);
@@ -277,6 +276,30 @@ public class NestedPath {
         return pathContext;
     }
 
+    private void growCollection(Object instance,String prop,int positionalIdx) throws NoSuchMethodException,IntrospectionException,IllegalAccessException,InvocationTargetException,InstantiationException  {
+        Object propInstance = pub.getProperty(instance,prop);
+        if ( propInstance != null  ) {
+            if ( propInstance.getClass().isArray() ) {
+                Object[] elementData = (Object[])propInstance;
+                int oldCapacity = elementData.length;
+                int minCapacity =  positionalIdx+1;
+                if (minCapacity > oldCapacity) {
+                    Object oldData[] = elementData;
+                    int newCapacity = (oldCapacity * 3)/2 + 1;
+                    if (newCapacity < minCapacity)
+                        newCapacity = minCapacity;
+                    elementData = Arrays.copyOf(elementData, newCapacity);
+                    pub.setProperty(instance,prop,elementData);
+                }
+                if ( elementData[positionalIdx] == null ) {
+                    Class clasz = elementData.getClass().getComponentType();
+                    Constructor constructor = ConstructorUtils.getAccessibleConstructor(clasz, new Class[]{});
+                    elementData[positionalIdx]= constructor.newInstance();
+                }
+
+            }
+        }
+    }
     private static String namedToPositioned(String next,int position) {
         String substr = StringUtils.substringBetween(next,""+ResolverImpl.getIndexedStart(),""+ResolverImpl.getIndexedEnd());
         return StringUtils.replace(next,substr,""+position);
@@ -288,23 +311,27 @@ public class NestedPath {
         return lazyBean;
     }
 
-    private static Object createInstance(Class clasz, String prop) throws IntrospectionException,IllegalAccessException,InvocationTargetException,InstantiationException  {
-        Class<?>[] type = getActualTypeArguments(prop,clasz);
-        Constructor constructor = ConstructorUtils.getAccessibleConstructor(type[0], new Class[]{});
+    private static Object createInstanceOfCollection(Class clasz, String prop) throws IntrospectionException,IllegalAccessException,InvocationTargetException,InstantiationException  {
+        Class type = getCollectionReturnType(prop,clasz);
+        Constructor constructor = ConstructorUtils.getAccessibleConstructor(type, new Class[]{});
         return constructor.newInstance();
     }
-    private static Class<?>[] getActualTypeArguments(String property,Class clasz) throws IntrospectionException {
-		List<Class<?>> types = new ArrayList<Class<?>>();
+
+
+    private static Class getCollectionReturnType(String property,Class clasz) throws IntrospectionException {
 		PropertyDescriptor propertyDescriptor = new PropertyDescriptor(property, clasz);
 		Method method = propertyDescriptor.getReadMethod();
-		ParameterizedType genericReturnType = (ParameterizedType)method.getGenericReturnType();
-		Type[] actualTypeArguments = genericReturnType.getActualTypeArguments();
-        for ( int i=0 ; i < actualTypeArguments.length ; i ++) {
-        	Class<?> type = (Class<?>)(actualTypeArguments[i]);
-        	types.add(type);
+        Class klass =  GenericCollectionTypeResolver.getCollectionReturnType(method);
+        if ( klass == null ) {
+            klass = GenericTypeResolver.resolveReturnType(method,clasz); 
+            if  ( klass.isArray() ) {
+                return klass.getComponentType();
+            } else {
+                throw new IllegalStateException("unsupported return type");
+            }
         }
-        return types.toArray(new Class<?>[types.size()]);
-	}
+        else return klass;
+    }
 
     private static String getUndeterminedIndex(String expression) {
         for (int i = 0; i < expression.length(); i++) {
