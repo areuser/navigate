@@ -21,7 +21,7 @@ import org.apache.commons.beanutils.expression.Resolver;
  */
 
 class ResolverImpl implements Resolver {
-    private static char NESTED        = '.';
+    private static char NESTED        = '/';
     private static char MAPPED_START  = '(';
     private static char MAPPED_END    = ')';
     private static char INDEXED_START = '[';
